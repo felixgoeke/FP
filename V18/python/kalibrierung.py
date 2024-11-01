@@ -1,76 +1,79 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib
 import numpy as np
 from scipy.signal import find_peaks
-import os
+import pandas as pd
+from iminuit.cost import LeastSquares
+import iminuit
+from iminuit import Minuit
 
-SKIP_ANFANG = 12
-SKIP_ENDE = 14
+import matplotlib.pyplot as plt
 
-#Europiumdaten einlesen
-europium = pd.read_csv("/home/felix/Arbeitsheft/FP/V18/data/Europium.Spe", skiprows=SKIP_ANFANG, header=None)
-europium = europium.iloc[:-SKIP_ENDE]
-europium.columns = ["Daten"]
+# Assuming the data is in two columns: channel and counts
+# Skip the first 12 lines of the file
+data = pd.read_csv('../data/Europium.Spe', skiprows=200, header=None)
+untergrund = pd.read_csv('../data/Untergrund.Spe', skiprows=200, header=None)
+# Remove the last 14 lines of data
+data = data.iloc[:-14]
+untergrund = untergrund.iloc[:-14]
 
-print(europium.columns)  # To see the current column names
+# Benenne die Spalte
+data.columns = ['Daten']
+untergrund.columns = ['Daten']
+# Füge einen Index als Channel hinzu
+data['Channel'] = data.index
+untergrund['Channel'] = untergrund.index
 
-#untergrund
-untergrund = pd.read_csv("/home/felix/Arbeitsheft/FP/V18/data/Untergrund.Spe", skiprows=SKIP_ANFANG, header=None)
-untergrund = untergrund.iloc[:-SKIP_ENDE]
-untergrund.columns = ['daten']
+# Sicherstellen, dass die Spalte "data" numerische Werte enthält
+data['Daten'] = pd.to_numeric(data['Daten'], errors='coerce')
+untergrund['Daten'] = pd.to_numeric(untergrund['Daten'], errors='coerce')
 
-europium["data"] = pd.to_numeric(europium["Daten"], errors="coerce")
-untergrund["daten"] = pd.to_numeric(untergrund["daten"], errors="coerce")
+# Normierung des Untergrundes
+# Untergrundmessung dauerte 78545s, europiummessung 3718s
+untergrund['Daten'] = untergrund['Daten'] * (3718 / 78545)
 
-print(europium.columns.tolist())
+# Untergrund entfernen
+data['Daten'] = data['Daten'] - untergrund['Daten']
 
-#index
-europium["index"] = europium.index
-untergrund["index"] = untergrund.index
+# Finde Peaks
+peaks_array, properties = find_peaks(data['Daten'], height=10, prominence=20, distance=100)  # Höhe nach Bedarf anpassen
+peaks = pd.DataFrame({'peaks': peaks_array, 'peaks_heights': properties['peak_heights']})
+peaks = peaks.drop([0,1,2,3])
 
-#literaturwerte
-europium_lit = pd.read_csv("/home/felix/Arbeitsheft/FP/V18/data/Eu_Lit.csv", skiprows=1,sep='\s+')
-europium_lit.columns = ["Energie", "Unischerheit(Energie)", "Intensität", "Unischerheit(Intensität)"]
+# Plotten des Spektrums und der Peaks
+plt.figure(figsize=(21, 9))
 
-print(europium_lit.head())  # To view the first few rows and columns of europium_lit
-print(europium_lit.columns)  # To see the current column names
+plt.bar(data['Channel'], data['Daten'], linewidth=2, width=1.1, label='Europium')
+plt.plot(peaks['peaks'], peaks['peaks_heights'], 'x',color='orange', label='Peaks')
+plt.savefig('../plots/Europium.pdf')
+plt.clf()
 
-#normierung des untergrundes
-#untergrundmessung dauerte 78545s, europiummessung 3718s
-untergrund["daten"] = untergrund["daten"] / 78545 * 3718
+#Literaturwerte einlesen
+lit = pd.read_csv('../data/Eu_Lit.csv', skiprows=1, sep='\s+', header=None)
+lit.columns = ['Energie', 'Unsicherheit(E)', 'Intensität', 'Unsicherheit(I)']
+lit = lit.head(len(peaks))
+lit.sort_values(by='Energie', inplace=True, ascending=True)
+lit = lit.reset_index(drop=True)
 
-#untergrund abziehen
-europium["data"] = europium["data"] - untergrund["daten"]
+peaks.sort_values(by='peaks', inplace=True, ascending=True)
+peaks = peaks.reset_index(drop=True)
 
-#negativwerte entfernen
-europium = europium["data"].clip(lower=0)
+peaks = pd.concat([peaks, lit], axis=1)
 
-#peaks bestimmen
-peaks_array, peaks_params = find_peaks(europium["data"], height=15, prominence=20 ,distance=15)
-peaks = pd.DataFrame(peaks_params)
-peaks["peaks"] = peaks_array
+# Kalibrierung
+def kalibrierung(x, a, b):
+    return a * x + b
 
-print(peaks.head())
+least_squares = LeastSquares(peaks['peaks'], lit['Energie'], lit['Unsicherheit(E)'],kalibrierung)
+m = Minuit(least_squares, a=0, b=0)
+m.migrad()
+m.hesse()
 
-#untergrund peaks entfernen
-#peaks = peaks.drop([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20])
-
-#plot
-plt.figure(figsize=(10,5))
-
-plt.bar(europium["index"], europium["data"], linewidth=2, label= r'$^{152}\mathrm{EU}$',color="blue", alpha=0.5)
-plt.plot(peaks["peaks"], peaks["peak_heights"], "x", color="red", label="Peaks")
-
-for peak in peaks["peaks"]:
-    plt.axvline(x=peak, color='orange', linestyle='--', alpha=0.7)
-
-
-plt.xlabel("Kanal")
-plt.ylabel("Counts")
-
-plt.legend()
-plt.grid(True)
-
-os.makedirs('../plots', exist_ok=True)
-plt.savefig("../plots/europium.pdf")
+# Plot der Kalibrierung
+plt.figure(figsize=(21, 9))
+plt.errorbar(peaks['peaks'], peaks['Energie'], yerr=peaks['Unsicherheit(E)'], fmt='o', label='Peaks')
+plt.plot(peaks['peaks'], kalibrierung(peaks['peaks'], m.values['a'], m.values['b']), label='Kalibrierung')
+fit_info = [f'a = {m.values["a"]:.2f} ± {m.errors["a"]:.2f}', f'b = {m.values["b"]:.2f} ± {m.errors["b"]:.2f}']
+plt.xlabel('Channel')
+plt.ylabel('Energie [keV]')
+plt.legend(title='\n'.join(fit_info), frameon=False)
+plt.savefig('../plots/Kalibrierung.pdf')
+plt.clf()

@@ -33,14 +33,18 @@ untergrund["index"] = untergrund.index
 
 # Einlesen der Literaturwerte
 europium_lit = pd.read_csv(
-    "../data/Eu_Lit.csv",
-    skiprows=1,
-    sep="\s+",
+    "../data/Europium_Lit.csv",
+    sep=";",
+    skiprows=13,
     header=None,
+    usecols=[0, 1, 2, 3]
 )
 europium_lit.columns = ["Energie", "Unsicherheit(E)", "Intensität", "Unsicherheit(I)"]
-europium_lit = europium_lit.drop([10, 11, 12, 13])  # Nehme 10 Werte
-# europium_lit = europium_lit.drop([ 1, 13])  # Ein Wert zuviel
+europium_lit["Energie"] = pd.to_numeric(europium_lit["Energie"], errors="coerce")
+europium_lit["Unsicherheit(E)"] = pd.to_numeric(europium_lit["Unsicherheit(E)"], errors="coerce")
+europium_lit["Intensität"] = pd.to_numeric(europium_lit["Intensität"], errors="coerce")
+europium_lit["Unsicherheit(I)"] = pd.to_numeric(europium_lit["Unsicherheit(I)"], errors="coerce")
+
 
 
 plt.figure(figsize=(21, 9))
@@ -62,14 +66,14 @@ europium["data"] = europium["data"].clip(lower=0)
 
 # Peaks bestimmen und mit den zugehörigen Parametern in Dataframe speichern
 peaks_array, peaks_params = find_peaks(
-    europium["data"], height=20, prominence=21, distance=59
+    europium["data"], height=15, prominence=19, distance=10
 )
 peaks = pd.DataFrame(peaks_params)
 peaks["peaks"] = peaks_array
 
 # Peaks die eher dem Untergrundrauschen zuzuordnen sind entfernen
-peaks = peaks.drop([1,2,3,4,5])
-
+#peaks = peaks.drop([1,2,3,4,5])
+europium_lit = europium_lit.head(len(peaks))
 # Plot der Kalibrationsmessung
 plt.figure(figsize=(21, 9))
 
