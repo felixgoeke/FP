@@ -45,34 +45,45 @@ europium_lit["Unsicherheit(E)"] = pd.to_numeric(europium_lit["Unsicherheit(E)"],
 europium_lit["Intensität"] = pd.to_numeric(europium_lit["Intensität"], errors="coerce")
 europium_lit["Unsicherheit(I)"] = pd.to_numeric(europium_lit["Unsicherheit(I)"], errors="coerce")
 
-
-
-plt.figure(figsize=(21, 9))
-plt.bar(untergrund["index"], untergrund["daten"], linewidth=2, width=1.1, label="Untergrund", color="orange")
-plt.xlabel(r"Channels")
-plt.ylabel(r"Signals")
-os.makedirs('../plots', exist_ok=True)
-plt.savefig("../plots/Untergrund.pdf")
-plt.clf()
 #normierung des untergrundes
 #untergrundmessung dauerte 78545s, europiummessung 3718s
 untergrund["daten"] = untergrund["daten"] * (3718 / 78545)
 
+# Plot der Europium-Daten
+plt.figure(figsize=(21, 9))
+plt.bar(europium["index"], europium["data"], linewidth=2, width=1.1, label=r"$^{152}\mathrm{Eu}$", color="royalblue")
+plt.bar(untergrund["index"], untergrund["daten"], linewidth=2, width=1.1, label="Untergrund", color="orange")
+plt.xlabel(r"Channels")
+plt.ylabel(r"Signals")
+plt.title(r"Europium Data")
+plt.grid(True, linewidth=0.1)
+plt.legend()
+plt.tight_layout()
+plt.savefig("../plots/Europium.pdf")
+plt.clf()
+
 # Untergrund entfernen
 europium["data"] = europium["data"] - untergrund["daten"]
+
 
 # Negative Werte in einem Histogramm sind unphysikalisch
 europium["data"] = europium["data"].clip(lower=0)
 
+# Daten im Bereich von Zeile 1000 bis 8000 betrachten, ohne sie tatsächlich abzuschneiden
+europium_view = europium.iloc[1000:8000]
+untergrund_view = untergrund.iloc[1000:8000]
+
 # Peaks bestimmen und mit den zugehörigen Parametern in Dataframe speichern
 peaks_array, peaks_params = find_peaks(
-    europium["data"], height=15, prominence=19, distance=10
+    europium_view["data"], height=5, prominence=15, distance=10
 )
 peaks = pd.DataFrame(peaks_params)
-peaks["peaks"] = peaks_array
+peaks["peaks"] = peaks_array +1000 # Offset durch 900 Zeilen
+
+#droppe peaks die dem Untergrund zuzuordnen sind
+peaks = peaks.drop([0, 1, 2, 3, 4, 5, 6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24])
 
 # Peaks die eher dem Untergrundrauschen zuzuordnen sind entfernen
-#peaks = peaks.drop([1,2,3,4,5])
 europium_lit = europium_lit.head(len(peaks))
 # Plot der Kalibrationsmessung
 plt.figure(figsize=(21, 9))
