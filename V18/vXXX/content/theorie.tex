@@ -54,25 +54,63 @@ Die Interaktionswahrscheinlichkeit steigt beim Comptoneffekt linear mit der Kern
 Germanium hat eine relativ hohe Kernladungszahl von $Z=32$, weshalb auch noch viele Photonen über den Photoeffekt detektiert werden können, welcher auf Grund der diskreten 
 Energie der Elektronen das Spektrum der Probe am besten charakterisiert. 
 \subsection{Gammaspektren}
--chrakteristische Linien
+Ein radioaktives Isotop kann beim Zerfall in andere Isotope in einen angeregten Zustand übergehen. Diesen kann der Atomkern durch spontane Emission eines 
+hochenergetischen Photons verlassen. Da ein reines Isotop nur eine endliche Anzahl an Zerfallsmoden besitzt, ist das Spektrum dieser hochenergetischen 
+Gammaphotonen charakteristisch für das jeweilige Isotop. In einem Detektor kann dann die Energie der Photonen gemessen werden und ein Spektrum aufgenommen werden.
+In ein Abbildung \ref{fig:Spektrum} ist ein Beispiel eines solchen Spektrums dargestellt. Die charakteristischen Linien sind dabei die Vollenergiepeaks die 
+entstehen, wenn die Photonen ihre Energie durch den Photoeffekt vollständig im Detektor deponieren. Die Ereignisse abseits der Peaks können 
+auf Streuereignisse der Photonen an den Elektronen zurückgeführt werden.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{illustration/LinienSpektrum.png}
     \caption{Beispiel eines Gammaspektrums mit charakteristischen Linien.\cite{GammaRay}}
     \label{fig:Spektrum}
 \end{figure}
--moochromatisches Spektrum
+In Abbildung \ref{fig:Mono} ist ein monochromatisches Spektrum dargestellt. Bei Isotopen, die nur in einen angeregten Zustand übergehen können,
+werden nur Photonen mit einer Energie detektiert. Dadurch lässt sich am gemessenen Spektrum gut erkennen über welche Prozesse die Strahlung Energie
+an den Detektor abgegeben hat. Der Full-Energy-Peak ist dabei der Peak, der durch den Photoeffekt entsteht. Die Comptonkante beschreibt 
+den maximalen Energieübertrag auf das Elektron bei Rückstreuung des Photons. Im Comptonkontinuum gibt es einen Backscatterpeak. Dieser entsteht 
+durch Rückstreuung von Photonen am Gehäuse des Detektors, welche dann ihre Energie vollständig per Photoeffekt im Detektor deponieren.
+Pile-Up beschreibt den Fall, dass zwei Photonen gleichzeitig detektiert werden und als ein Ereignis aufgenommen werden. Die gemeinsame Energie der beiden Photonen sorgt dann für weitere Ereignisse 
+jenseits des Full-Energy-Peaks.
 \begin{figure}{H}
     \centering
     \includegraphics[scale=1.0]{illustration/MonoSpektrum.png}
     \caption{Monochromatisches Gamma-Spektrum.\cite{GammaRay}}
     \label{fig:Mono}
 \end{figure}
-
-\subsection{Statistik der Gammapeaks}
--Zählexperimente Poissonverteilt
--Absorptionswahrscheinlichkeit
--Effizienz/Vollenergienachweiswahrscheinlichkeit
+\noindent Detektiert wird die Anzahl von Ereignissen mit einer bestimmten Energie in einem festen Zeitintervall. Zählexperimente wie dieses
+bei denen die Detektionswahrscheinlichkeit konstant bleibt während der Dauer sind immer Poissonverteilt.
+Das heißt der Fehler der gezählten Ereignisse ist $\sqrt{N}$, wobei $N$ die Anzahl der Ereignisse ist. 
+Bei bekanntem Extinctionskoeffizient kann über die Formel 
+\begin{equation}
+    \label{eq:Extinktion}
+    W=P(d) = 1-\exp(-\epsilon d)
+\end{equation}
+die Wahrscheinlichkeit berechnet werden, dass ein Photon in einem Detektor mit Dicke $d$ detektiert wird.
+Gleichzeitig kann experimentell ein Maß für die Vollenergienachweiswahrscheinlichkeit $Q$ bestimmt werden. Diese gibt an wie wahrscheinlich es ist, dass ein Photon, 
+welches von einem bekannten Isotop in Richtung des Detektors emittiert wird über den Photoeffekt ein Signal erzeugt, detektiert wird.
+Es kann über die Formel 
+\begin{equation}
+    \label{eq:Q}
+    Q = \frac{N_{\text{Peak}}}{A\cdot W\cdot t}\cdot\frac{4\pi}{\Omega}
+\end{equation}
+bestimmt werden. Dabei ist $N_{\text{Peak}}$ die Anzahl der Ereignisse im Peak, $A$ die Aktivität der Probe, $t$ die Messzeit, $\Omega$ der Raumwinkel und $W$ die Emissionswahrscheinlichkeit eines Photons mit dieser Energie.
+Der Raumwinkel $\Omega$ ist in diesem experimentellen Aufbau durch den Radius des Detektors und den Abstand zur Probe gegeben.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{illustration/Raumwinkel.png}
+    \caption{Skizze des Versuchsaufbaus.}
+    \label{fig:Raumwinkel}
+\end{figure}
+Der Raumwinkel ist gemäß den Größen aus Abbildung \ref{fig:Raumwinkel} und der Annahme das $\alpha$ klein ist gegeben durch
+\begin{equation}
+    \label{eq:Raumwinkel}
+    \Omega = 2\pi\left(1-\frac{a}{\sqrt{a^2+r^2}}\right)
+\end{equation}
+mit $r=d/2$ als Radius des Detektors und $a$ als Abstand zur Probe. Der Abstand $a$ beträgt dabei $7.02\si{\centi\meter}$ von Probe zu einer Aluminiumabschirmung
+und $1.5\si{\centi\meter}$ von der Abschirmung zum Detektor. Der Detektor hat einen Radius von $r=2.25\si{\centi\meter}$.
+Damit ergibt sich ein Raumwinkel von $\Omega=0.016\cdot 4\pi$.
 \subsection{Halbleitergrundlagen}
 -Energiebänder
 -direkt/indirekt
@@ -81,11 +119,10 @@ Energie der Elektronen das Spektrum der Probe am besten charakterisiert.
 -Aufbau/Zonen/Spannung
 -Signalentstehung
 
-\subsection{Signalverarbeitung}
+\subsection{Signalverarbeitung und Unsicherheiten}
 -Preamp
 -Shaping/Amp
 -MCA
-\subsection{Unschärfe der Photopeaks}
 -Rauschen(Elektronik)
 -thermische Übergänge im Detekor
 -intrinsische Unschärfe
