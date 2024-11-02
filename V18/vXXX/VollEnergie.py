@@ -73,3 +73,46 @@ results_df['Q_err'] = results_df['Q_err'].round(5)
 results_df.to_csv('./build/peaks_result.txt', index=False, sep='\t')
 print("Die Berechnungen wurden abgeschlossen und in 'peaks_result.txt' gespeichert.")
 
+def q_energy(e, a, b):
+    """Formel für die Energieabhängigkeit der Vollenergienachweiswahrscheinlichkeit"""
+    Q = a * e** b
+    return Q
+
+# Fit der Energieabhängigkeit der Vollenergienachweiswahrscheinlichkeit
+# Daten für den Fit vorbereiten
+x_data = results_df['Energie']
+y_data = results_df['Q']
+y_err = results_df['Q_err']
+
+# LeastSquares-Kostenfunktion erstellen
+least_squares = LeastSquares(x_data, y_data, y_err, q_energy)
+
+# Minuit-Objekt erstellen und den Fit durchführen
+m = Minuit(least_squares, a=1, b=1)
+m.migrad()
+
+
+# Fit-Ergebnisse mit Fehlern ausgeben
+
+a_value = m.values['a']
+a_error = m.errors['a']
+b_value = m.values['b']
+b_error = m.errors['b']
+print(m)
+print(f"Fit-Ergebnisse: a = {a_value} ± {a_error}, b = {b_value} ± {b_error}")
+# Fit-Kurve plotten
+x_fit = np.linspace(min(x_data-10), max(x_data+10), 500)
+y_fit = q_energy(x_fit, m.values['a'], m.values['b'])
+plt.figure(figsize=(10, 6))
+plt.plot(x_fit, y_fit, label='Fit', color='blue')
+
+# Plotten der Energie gegen Q
+plt.errorbar(results_df['Energie'], results_df['Q'], yerr=results_df['Q_err'], fmt='o', ecolor='r', capsize=5, label='Messdaten')
+plt.xlabel('Energie (keV)')
+plt.ylabel('Vollenergienachweiswahrscheinlichkeit Q')
+#plt.title('Energie vs. Vollenergienachweiswahrscheinlichkeit')
+plt.legend()
+plt.grid(True)
+plt.legend(title=f'Fit: a={m.values["a"]:.5f}, b={m.values["b"]:.5f}')
+plt.savefig('./plots/energie_vs_Q.pdf')
+print("Das Diagramm wurde als 'energie_vs_Q.png' gespeichert.")
