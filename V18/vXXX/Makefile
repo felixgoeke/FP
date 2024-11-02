@@ -5,7 +5,8 @@ build/build/Geschwindigkeit15.pdf build/Geschwindigkeit30.pdf build/Geschwindigk
 	# so that matplotlib can find the tex header when running
 	# LaTeX in the tmp directory
 	# and set the matplotlibrc
-	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python plot.py
+	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python kalibrierung2.py 
+	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python VollEnergie.py
 
 # hier weitere Abhängigkeiten für build/vXXX.pdf deklarieren:
 #build/vXXX.pdf:
