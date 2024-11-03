@@ -111,23 +111,98 @@ Der Raumwinkel $\Omega$ ist in diesem experimentellen Aufbau durch den Radius de
 mit $r=d/2$ als Radius des Detektors und $a$ als Abstand zur Probe. Der Abstand $a$ beträgt dabei $7.02\si{\centi\meter}$ von Probe zu einer Aluminiumabschirmung
 und $1.5\si{\centi\meter}$ von der Abschirmung zum Detektor. Der Detektor hat einen Radius von $r=2.25\si{\centi\meter}$.
 Damit ergibt sich ein Raumwinkel von $\Omega/4\pi=0.016$.
-\subsection{Halbleitergrundlagen}
--Energiebänder
--direkt/indirekt
--Dotierung
-\subsection{Aufbau eines Germaniumdetektors}
--Aufbau/Zonen/Spannung
--Signalentstehung
+\subsection{Halbleitergrundlagen und Aufbau des Germaniumdetektors}
 
+In Festkörpern mit einem periodischen Gitter kann die Besetzung der Elektronen über eine Bandstruktur beschrieben werden.
+Nach dem Pauli-Prinzip können zwei Elektronen in einem System nicht die gleichen Energieniveaus besetzen. Daher spalten sich 
+die Energieniveaus der einzelnen Atome in ein Band auf. Genauer sind die Energiebänder die Überlagerungen der Energieniveaus aller Atome im 
+reziproken Raum. Dementsprechend können Elektronen mit einer bestimmten Energie im Festkörper nur vorliegen, wenn es Zustände in einem Band mit dieser 
+Energie gibt. Energieintervalle ohne Zustand werden Bandlücken genannt, da dort keine Elektronen existieren können.
+
+\noindent Festkörper können anhand ihrer Bandstruktur in 3 Kategorien unterteilt werden: Metalle, Halbleiter und Isolatoren.
+Die Bandstruktur dieser Festkörper ist in Abbildung \ref{fig:Band} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{illustration/Bänder.png}
+    \caption{Bandstruktur von Metallen, Halbleitern und Isolatoren \cite{demtröder}.}
+    \label{fig:Band}
+\end{figure}
+\noindent Dabei bezeichnet $E_\text{F}$ die Fermi-Energie, welche angibt bis zu welcher Energie bei $T=\qty{0}{\kelvin}$ die Zustände besetzt sind.
+Bei Isolatoren liegt diese Energie zwischen 2 Bändern, also in einer Bandlücke. Das Band unterhalb der Fermi-Energie wird Valenzband genannt, 
+da dieses bei $T=\qty{0}{\kelvin}$ vollständig besetzt ist. Das Band oberhalb der Fermi-Energie wird Leitungsband genannt, da dieses bei $T=\qty{0}{\kelvin}$ leer ist und 
+Elektronen in diesem Band frei beweglich sind. Bei Metallen liegt die Fermi-Energie im Leitungsband, weshalb diese bei $T=\qty{0}{\kelvin}$ leitfähig sind.
+Halbleiter haben eine analoge Bandstruktur zu Isolatoren, jedoch ist die Bandlücke kleiner. Sie beträgt bei Halbleitern bis zu $\qty{3}{\eV}$, bei Isolatoren 
+ist sie größer. Daher können in Halbleitern durch thermische Anregung, bei Raumtemperatur etwa $\qty{26}{\milli\eV}$, Elektronen in das Leitungsband gelangen. 
+Allerdings ist die Ladungsträgerdichte in Eigenleitung noch sehr gering. Germanium hat allerdings mit einer Bandlücke von $\qty{0.67}{\eV}$ eine relativ geringe Bandlücke, was auch thermische Übergänge 
+begünstigt.
+
+\noindent Für eine Erhöhung der Ladungsträgerdichte im Halbleiter kann dieser dotiert werden. Dabei werden gezielt Fremdatome in das Kristallgitter eingebaut, welche zusätzliche Elektronen oder Löcher in das Leitungs- oder Valenzband einbringen.
+Diese Fremdatome können in Donatoren und Akzeptoren eingeteilt werden. Ein Donator hat ein Valenzelektron mehr als die Gitteratome des Festkörpers, während die Akzeptoren ein Valenzelektron weniger haben.
+Wenn diese nur in geringer Anzahl eingebaut werden, verändern sie die Bandstruktur des Festkörpers nahezu nicht. Sie können allerdings Zustände innerhalb der Bandlücke 
+erzeugen und so die Bandlücke stark verkleinern. In Abbildung \ref{fig:Ndot} ist 
+die Bandstruktur eines N-dotierten Halbleiters dargestellt. Dort ist zu sehen, dass die Energieniveaus der Donatoren deutlich näher am Leitungsband liegen. 
+Dadurch ist die Bandlücke sehr klein und die Ladungsträger können bei Raumtemperatur nahezu alle ins Leitungsband gelangen.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{illustration/Ndot.png}
+    \caption{Bandstruktur eines N-dotierten Halbleiters \cite{demtröder}.}
+    \label{fig:Ndot}
+\end{figure}
+\noindent Der Germaniumdetektor wird nicht dotiert, sondern  mit Lithium und Gold beschichtet. Diese wirken wie eine n oder p dotierte Schicht in dem Sinne, dass Lithium 
+Elektronen in das Leitungsband einbringt und Gold Löcher in das Valenzband. Dadurch entsteht eine Verarmungsschicht im Germaniumkristall, in der die Ladungsträgerdichte sehr gering ist. 
+Germanium selbst ist ein indirekter Halbleiter, siehe Abbildung \ref{fig:Indirekt}, was bedeutet, dass die Bandkante des Leitungsbandes nicht am gleichen Punkt im reziproken Raum liegt wie die Bandkante des Valenzbandes.
+Für Übergänge zwischen den beiden Bändern bedeutet dies, dass ein Phonon benötigt wird, um den Impulsunterschied auszugleichen. Dies macht den Prozess unwahrscheinlicher und es werden größere
+Energien benötigt um die Bandlücke zu überwinden. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{illustration/Indirekter Halbleiter.png}
+    \caption{Bandstruktur eines indirekten Halbleiters \cite{Detektor}.}
+    \label{fig:Indirekt}
+\end{figure}
+\noindent Um den dotierten Germaniumkristall als Detektor zu verwenden wird nun eine Spannung so angelegt, dass die Ladungen und Löcher in den dotierten Schichten abfließen.
+Im Kristall selbst diffundieren alle Elektronen zu der p-dotierten Schicht und alle Löcher zu der n-dotierten Schicht. Die zusätzlich angelegte 
+Spannung verstärkt diesen Effekt noch. Die Verarmungsschicht umfasst dann den gesamten Kristall. Zwischen den dotierten Schichten entsteht ein elektrisches Feld, welches
+entstehende freie Ladungsträger sofort absaugt. Wenn nun ein hochenergetisches Photon ein Elektron aus dem Valenzband in das Leitungsband 
+anhebt. Entsteht ein Elektron-Loch-Paar. Das Elektron selbst ist wieder hochenergetisch und löst so weitere Elektronen-Loch-Paare aus.
+Auf Grund des E-Feldes sammeln sich die Elektronen und Löcher jeweils an einem Pol, wo sie detektiert werden können. Die Anzahl an Ladungen ist dann ungefähr proportional zur Energie des Photons.
 \subsection{Signalverarbeitung und Unsicherheiten}
--Preamp
--Shaping/Amp
--MCA
--Rauschen(Elektronik)
--thermische Übergänge im Detekor
--intrinsische Unschärfe
--unschärfe in Anzahl erzeugter und detektierter Elektronen
--Abschirmung
+Die Elektronik hat im Prinzip 3 verschiedene Aufgaben. Zunächst muss die Ladungsmenge, die ein Photon erzeugt hat in ein elektrisches Signal umgewandelt werden, z.B. einen Spannungspuls.
+Diese Aufgabe übernimmt der Vorverstärker. Dann soll das Signal so verstärkt und geformt werden, dass sich die verschiedenen Signale gut unterscheiden lassen. Das macht der Verstärker 
+zusammen mit einem Shaper und einem Diskriminator. Zuletzt soll das Signal gemäß seiner Stärke digitalisiert und gespeichert werden. Dies übernimmt ein Multichannelanalyzer (MCA).
+Einen schematischen Aufbau der Elektronik ist in Abbildung \ref{fig:Schaltung} dargestellt.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.8]{illustration/Messchaltung.png}
+    \caption{Vollständige Messschaltung eines Germaniumdetektors\cite{Detektor}.}
+    \label{fig:Schaltung}
+\end{figure}
+\noindent In der Vorverstärkerstufe wird das Signal mit einem über einen Kondensator rückgekoppelten Operationsverstärker integriert, sodass ein Spannungssignal proportional zur Ladungsmenge entsteht.
+Parallel zum Kondensator ist ein großer Widerstand für die Entladung des Kondensators, geschaltet. Die Integriererschaltung zusammen mit dem resultierenden Signal ist in Abbildung \ref{fig:PreAmp} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{illustration/Vorverstärker.png}
+    \caption{Vorverstärker in einem Germaniumdetektor \cite{Detektor}.}
+    \label{fig:PreAmp}
+\end{figure}
+Die Folgende Elektronik soll das Signal so Formen, dass jeder Puls eine Gaußform annimmt. Wenn die Signale eine einheitliche Form haben, kann mit einem Diskriminator
+Pulse mit geringer Spannung herausfiltern. So können Rauscheinflüsse in dem resultierenden Spektrum minimiert werden. 
+Der Multichannelanalyzer sortiert die Signale dann nach ihrer Stärke und speichert sie gemäß ihrer Stärke in einem Kanal ein. Dieser Prozess führt ein Analog-Digital-Wandler durch.
+Der kontinuierlichen Signalstärke wird eine diskrete Zahl zugeordnet. 
+Die Kanäle können dann mit einem Computer ausgelesen werden.
+
+\noindent Das Gammaspektrum kann niemals vollständig scharf aufgelöst werden. Das hat sowohl physikalische Ursachen als auch technische.
+Ein wesentlicher Beitrag entsteht durch das Rauschen in der Elektronik des Detektors. Dieses Rauschen, bedingt durch die Verstärkerschaltung und andere elektronische Komponenten, 
+führt zu einer Schwankung im Signal und damit zu einer Verbreiterung der spektralen Linien.
+Weiterhin spielen thermische Übergänge innerhalb des Detektors eine Rolle. Diese sind bedingt durch thermisch angeregte Ladungsträger, 
+die sich zufällig im Material bewegen und so das Spektrum zusätzlich beeinflussen. Eine gute Kühlung des Germaniumdetektors hilft, 
+diese thermischen Effekte zu minimieren, aber sie können nicht vollständig unterdrückt werden.
+Auch die Schwankungen in der Anzahl der erzeugten und detektierten Elektronen tragen zur Linienbreite bei. 
+Bei jedem einfallenden Gammaquant wird eine gewisse Anzahl von Elektron-Loch-Paaren erzeugt, die jedoch statistischen Schwankungen unterliegen, was zur weiteren Verbreiterung der Spektrallinien führt.
+Schließlich beeinflusst die Abschirmung um den Detektor herum die Linienbreite. 
+Abschirmmaterialien reduzieren Hintergrundstrahlung und Streustrahlung, die das Spektrum verzerren könnten. 
+Eine unzureichende Abschirmung kann jedoch zusätzliche Linienbreite verursachen, da externe Quellen Rauschen und unerwünschte Signaleinspeisungen in das Spektrum bringen.
+
+
 
 % \begin{equation}
 %     \label{eq:}
