@@ -71,18 +71,18 @@ europium["data"] = europium["data"] - untergrund["daten"]
 europium["data"] = europium["data"].clip(lower=0)
 
 # Daten im Bereich von Zeile 1000 bis 8000 betrachten, ohne sie tatsächlich abzuschneiden
-europium_view = europium.iloc[1000:8000]
-untergrund_view = untergrund.iloc[1000:8000]
+europium_view = europium.iloc[79:8000]
+untergrund_view = untergrund.iloc[79:8000]
 
 # Peaks bestimmen und mit den zugehörigen Parametern in Dataframe speichern
 peaks_array, peaks_params = find_peaks(
-    europium_view["data"], height=5, prominence=15, distance=10
+    europium_view["data"], height=5, prominence=15, distance=50
 )
 peaks = pd.DataFrame(peaks_params)
-peaks["peaks"] = peaks_array +1000 # Offset durch 900 Zeilen
+peaks["peaks"] = peaks_array +79 # Offset durch 900 Zeilen
 
 #droppe peaks die dem Untergrund zuzuordnen sind
-peaks = peaks.drop([0, 1, 2, 3, 4, 5, 6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24])
+peaks = peaks.drop([1, 2, 3, 4,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27])
 
 # Peaks die eher dem Untergrundrauschen zuzuordnen sind entfernen
 europium_lit = europium_lit.head(len(peaks))
