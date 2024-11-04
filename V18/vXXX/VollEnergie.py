@@ -57,7 +57,7 @@ t = 3634  # s
 # Berechnung der Vollenergienachweiswahrscheinlichkeit für die Peaks
 results = []
 
-for index, row in peaks.iloc[3:].iterrows():
+for index, row in peaks.iloc[1:].iterrows():
     N = ufloat(row['N'], row['N_err'])
     W = ufloat(row['Intensität'], row['Unsicherheit(I)'])  # Annahme: 'Intensität_err' ist die Spalte für die Unsicherheit in peaks.csv
     Q = fedp(omega_4pi, N, end_aktivität, W, t)
