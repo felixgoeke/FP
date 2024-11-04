@@ -55,7 +55,7 @@ caesium["daten"] = caesium["daten"].clip(lower=0)
 
 # Peaks raussuchen um sie zu fitten
 peaks_array, peaks_params = find_peaks(
-    caesium["daten"], height=20, prominence=40, distance=10
+    caesium["daten"], height=15, prominence=30, distance=10
 )
 peaks = pd.DataFrame(peaks_params)
 peaks["peaks"] = peaks_array
@@ -102,7 +102,8 @@ def gauss(x, A, mu, sigma):
     return (A / (np.sqrt(2 * np.pi) *sigma)) * np.exp(-((x - mu) ** 2) / (2 * sigma ** 2))
 
 # Fitten der Peaks mit der Gauss-Funktion
-for peak in peaks["peaks"]:
+# Den ersten Peak weglassen
+for peak in peaks["peaks"].iloc[1:]:
     # Bereich um den Peak herum definieren
     window = 30
     x_data = caesium["index"][peak - window:peak + window]
@@ -157,6 +158,152 @@ verhaeltnis = fwhm / fwtm
 print(f"Verhältnis FWHM/FWTM: {verhaeltnis}")
 
 #Photo-Peak-Energie
-print(f"Photo-Peak bei Kanal {peaks['peaks'][0]}")
-photo_energie = peaks["peaks"][0] * alpha + beta
+print(f"Photo-Peak bei Kanal {peaks['peaks'][1]}")
+photo_energie = peaks["peaks"][1] * alpha + beta
 print(f"Photo-Peak-Energie: {photo_energie} keV (irgendwie um faktor 2 falsch)")
+
+# Integration der Fit-Funktion des Photopeaks
+def integrate_gauss(A, mu, sigma):
+    integral, _ = quad(lambda x: gauss(x, A, mu, sigma), x_data.min(), x_data.max())
+    return integral
+
+# Berechnung des Inhalts des Photopeaks
+photo_peak_A = m.values["A"]
+photo_peak_mu = m.values["mu"]
+photo_peak_sigma = m.values["sigma"]
+
+photo_peak_content = integrate_gauss(photo_peak_A, photo_peak_mu, photo_peak_sigma)
+print(f"Inhalt des Photopeaks: {photo_peak_content}")
+#Inhalt des Photopeaks: 11525.206774769158
+
+#Compton-Kante
+compton_kante_theorie = compton_kante(662)
+print(f"Theoretische Compton-Kante bei {compton_kante_theorie} keV")
+compton_kante_energie = compton_kante(photo_energie)
+print(f"Compton-Kante bei {compton_kante_energie} keV")
+#Compton-Kante mit der halben Energie des Photo-Peaks
+compton_kante_energie2 = compton_kante(photo_energie / 2)
+print(f"Compton-Kante 1/2 bei {compton_kante_energie2} keV") #hier kommt das richtige raus
+
+#Umrechnung wieder zurück in Kanal
+def linear_invers(E, alpha, beta):
+    #Zur Umrechnung von Energie in Kanälen
+    K = E / alpha - beta
+    return K
+compton_kante_kanal = linear_invers(compton_kante_energie, alpha.n, beta.n)
+print(f"Compton-Kante bei Kanal {compton_kante_kanal}")
+compton_kante_kanal2 = linear_invers(compton_kante_energie2, alpha.n, beta.n)
+print(f"Compton-Kante 1/2 bei Kanal {compton_kante_kanal2}")
+compton_kante_kanal_theorie = linear_invers(compton_kante_theorie, alpha.n, beta.n)
+print(f"Theoretische Compton-Kante bei Kanal {compton_kante_kanal_theorie}")
+
+#Plot der Compton-Kante und des Backscattering-Peaks
+plt.figure(figsize=(10, 5))
+# Plot des Caesium-Spektrums
+plt.bar(caesium["index"], caesium["daten"], linewidth=2, width=1.1, label=r"$^{137}\mathrm{Cs}$", color="royalblue")
+
+# Plot der Compton-Kante 
+plt.axvline(x=compton_kante_kanal.n, color='green', linestyle='--', label=f'Compton-Kante (Berechnet)')
+#plt.axvline(x=compton_kante_kanal_theorie, color='purple', linestyle='--', label=f'Compton-Kante (Theorie)')
+## Plot der Compton-Kante 1/2
+#plt.axvline(x=compton_kante_kanal2.n, color='green', linestyle='--', label=f'Compton-Kante Hälfte: {compton_kante_kanal2.n:.2f} keV')
+
+
+# Plot des Backscatter-Peaks
+backscatter_peak = peaks["peaks"][0]
+plt.axvline(x=backscatter_peak, color='red', linestyle='--', label=f'Backscatter-Peak: {backscatter_peak}')
+
+# Bereich zwischen Backscatter-Peak und Compton-Kante 2 farbig unterlegen
+plt.fill_betweenx(
+    y=[0, caesium["daten"].max()],
+    x1=backscatter_peak,
+    x2=compton_kante_kanal.n,
+    color='gray',
+    alpha=0.3,
+    label='Backscatter to Compton-Kante 1/2'
+)
+
+# Plot-Einstellungen
+plt.xlabel(r"Channels")
+plt.ylabel(r"Signals")
+plt.legend()
+plt.grid(True, linewidth=0.1)
+plt.tight_layout()
+plt.savefig("./plots/Caesium-Compton-Backscatter.pdf")
+plt.clf()
+
+#Compton-Kontinuum Fit
+def compton_kontinuum(x, a, b):
+    return a * x + b
+
+#Bereich um die Compton-Kante herum
+x_min = backscatter_peak+300
+x_max = round(compton_kante_kanal.n)-500
+x_data = caesium["index"][x_min:x_max]
+y_data = caesium["daten"][x_min:x_max]
+
+#LeastSquares-Kostenfunktion definieren
+least_squares = LeastSquares(x_data, y_data, np.sqrt(y_data), compton_kontinuum)
+
+#Minuit-Objekt erstellen und anpassen
+m = Minuit(least_squares, a=0, b=0)
+m.migrad()
+
+#Fit-Ergebnisse extrahieren
+a_fit, b_fit = ufloat(m.values["a"],m.errors["a"]), ufloat(m.values["b"],m.errors["b"])
+print(m)
+print(f"Compton-Kontinuum: a = {a_fit}, b = {b_fit}")
+
+#Plot des Compton-Kontinuums
+plt.figure(figsize=(10, 5))
+#plt.plot(x_data, y_data, "x", label="Data", color="royalblue")
+plt.bar(x_data,y_data,linewidth=2, width=1.1, label="Data", color="royalblue")
+plt.plot(x_data, compton_kontinuum(x_data, a_fit.n, b_fit.n), color="orange",linewidth=2 ,label="Compton-Kontinuum Fit")
+plt.xlabel("Channels")
+plt.ylabel("Signals")
+plt.legend()
+plt.grid(True, linewidth=0.1)
+plt.tight_layout()
+plt.savefig("./plots/Caesium-Compton-Kontinuum.pdf")
+plt.clf()
+
+# Bestimme den Inhalt des Compton-Kontinuums
+def integrate_compton_kontinuum(a, b, backscatter_peak, x_max):
+    integral, _ = quad(lambda x: compton_kontinuum(x, a, b), backscatter_peak, x_max)
+    return integral
+
+# Berechnung des Inhalts des Compton-Kontinuums
+compton_kontinuum_content = integrate_compton_kontinuum(a_fit.n, b_fit.n, backscatter_peak, round(compton_kante_kanal.n))
+print(f"Inhalt des Compton-Kontinuums: {compton_kontinuum_content}")
+
+
+#Compton-Kontinuum: a = 0.00183+/-0.00009, b = 2.13+/-0.30
+#Inhalt des Compton-Kontinuums: 26105.178706110488
+
+#Verhältnis Compton-Kontinuum zu Photo-Peak
+compton_photo_verhaeltnis = compton_kontinuum_content / photo_peak_content
+print(f"Das Verhältnis zwischen dem Comptoninhalt und dem Photopeakinhalt ist: {compton_photo_verhaeltnis:.3f}")
+
+#Theorertischer Wert des Rückstreu-Peaks
+def backscatter(E_gamma):
+    return E_gamma / ( 1 + 2 * (E_gamma / 510.9989))
+
+backscatter_peak_theorie = backscatter(photo_energie)
+backscatter_peak_theorie_halbe = backscatter(photo_energie/2)
+
+print(f"Der theoretischer Backscatter-Peak liegt bei {backscatter_peak_theorie:.3}")
+print(f"Der theoretischer Backscatter-Peak (halbe) liegt bei {backscatter_peak_theorie_halbe:.3}")
+
+def absorption(mu,d):
+    return (1 - np.exp(-mu*d))*100 #in Prozent
+
+mu_photo =0.008
+mu_compton = 0.37
+
+d=3.9
+
+absorption_photo = absorption(mu_photo,d)
+absorption_compton = absorption(mu_compton,d)
+
+print(f"Die Absorptionswahscheinlichkeit für den Photopeak ist:{absorption_photo:.3}")
+print(f"Die Absorptionswahscheinlichkeit für das Comptonkontinuum ist:{absorption_compton:.3}")
