@@ -6,7 +6,10 @@ build/build/Geschwindigkeit15.pdf build/Geschwindigkeit30.pdf build/Geschwindigk
 	# LaTeX in the tmp directory
 	# and set the matplotlibrc
 	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python kalibrierung2.py 
+	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python Linienbreite_Neu.py 
 	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python VollEnergie.py
+	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python Caesium.py
+	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python Barium.py
 
 # hier weitere Abhängigkeiten für build/vXXX.pdf deklarieren:
 #build/vXXX.pdf:
