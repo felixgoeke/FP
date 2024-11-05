@@ -10,6 +10,7 @@ build/build/Geschwindigkeit15.pdf build/Geschwindigkeit30.pdf build/Geschwindigk
 	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python VollEnergie.py
 	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python Caesium.py
 	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python Barium.py
+	TEXINPUTS=$$(pwd)/..: MATPLOTLIBRC=../matplotlibrc python Uran.py
 
 # hier weitere Abhängigkeiten für build/vXXX.pdf deklarieren:
 #build/vXXX.pdf:
