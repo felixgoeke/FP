@@ -318,12 +318,11 @@ Für den Raumwinkel wird der bereits in \ref{sec:kalibrierung} bestimmte Wert ve
 Der Inhalt der Vollenergiepeaks wird durch eine Integration der Gaußfunktion bestimmt.
 Die Effizienz $Q$ wird durch die nichtlineare Regression \ref{eq:Q-fit} bestimmt.
 Dadurch ergeben sich die in der Tabelle \ref{tab:ba} aufgeführten Werte.
-
-\begin{table}
+\begin{table}[H]
   \centering
-  \caption{Energien \cite{Lara-Ba} und die Effizienz $Q$ der Vollenergiepeaks der $^{133}\text{Ba}$-Probe sowie die zugeordneten Kanäle, der bestimmte Inhalt und die daraus berechnete Aktivität.}
+  \caption{Energien \cite{Lara} und die Effizienz $Q$ der Vollenergiepeaks der $^{133}\text{Ba}$-Probe sowie die zugeordneten Kanäle, der bestimmte Inhalt und die daraus berechnete Aktivität.}
   \label{tab:ba}
-  \begin{tabular}{S S S S S S}
+  \begin{tabular}{S S S S S}
       \toprule {$E_\text{Lit} / \si{\kilo\electronvolt}$}  & {Kanal} & {Counts} & {$Q /\si{\percent}$} & {Aktivität $A/\si{\becquerel}$}\\
       \midrule
       80.9979 \pm 0.11  &793  &5580.537  &0.095 \pm 0.015   &35 \pm 6\\
@@ -341,7 +340,45 @@ Die Aktivität der $^{133}\text{Ba}$-Probe beträgt
 \end{equation*}
 
 \subsection{Nuklidbestimmung} \label{sec:nuklid}
+Im letzten Versuchsteil soll die Zusammensetzung einer unbekannten Probe bestimmt werden.
+Dafür wird das Spektrum der Probe gemessen und die prominentesten Peaks identifiziert.
+Die Messdaten sind in der Abbildung \ref{fig:unbekannt} dargestellt.
+Die Messung dauerte $t = 3427 \, \si{\second}$.
+Wie auch bei den anderen Messungen wurde die durchgeführte Untergrundmessung abgezogen.
+Zur Identifizierung wurde eine Nukliddatenbank \cite{Lara} herangezogen.
+Die identifizierten Peaks und die zugehörigen Energien sind in der Tabelle \ref{tab:unbekannt} aufgeführt.
+Da bei der Energiebestimmung des Photopeaks der Caesiumprobe ein systematischer Fehler aufgetreten ist, wird die Energie der Peaks der unbekannten Probe durch den aufgetretenen Faktor 2 geteilt.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../plots/Uran.pdf}
+  \caption{Spektrum der unbekannten Probe.}
+  \label{fig:unbekannt}
+\end{figure}
 
+\begin{table}
+  \centering
+  \caption{Energien und die Kanäle der Vollenergiepeaks der unbekannten Probe sowie die zugeordneten Nuklide.}
+  \label{tab:unbekannt}
+  \begin{tabular}{S S S}
+      \toprule {Kanal} & {$E / \si{\kilo\electronvolt}$} &  {Nuklid} \\
+      \midrule
+      620 &-3.54631\pm 0.00030  & - \\
+      753 &11.63790\pm 0.00030  & \\
+      904 &28.87711\pm 0.00030  & \\
+      1100&51.25385\pm 0.00030  & \\
+      1405&86.07478\pm 0.00030  & \\
+      1507&97.71981\pm 0.00030  & \\
+      1810&132.31242\pm 0.00030 & \\
+      2353&194.30510\pm 0.00030 & \\
+      2618&224.55935\pm 0.00030 & \\
+      2868&253.10110\pm 0.00030 & \\
+      3416&315.66462\pm 0.00030 & \\
+      5909&600.28295\pm 0.00030 & \\
+      6458&662.96063\pm 0.00030 & \\
+      7449&776.10013\pm 0.00030 & \\
+      \bottomrule
+  \end{tabular}
+\end{table}
 
 
 

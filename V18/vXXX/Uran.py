@@ -85,6 +85,7 @@ alpha = ufloat(0.228334, 0)
 beta  = ufloat(-148.659709, 0.000593)
 
 #Energie der Peaks
-peaks["Energie"] = kanal_energie(peaks["peaks"], alpha, beta) /2
+peaks["Energie 1/2"] = kanal_energie(peaks["peaks"], alpha, beta) /2
+peaks["Energie"] = kanal_energie(peaks["peaks"], alpha, beta)
 peaks.to_csv("./data/uran-peaks.csv", index=False)
 print("Saving uran-peaks.csv")
