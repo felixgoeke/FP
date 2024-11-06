@@ -42,7 +42,8 @@ r = 2.25  # cm
 omega_4pi = 1 / 2 * (1 - a / (np.sqrt(a**2 + r**2)))
 print(f"Der Raumwinkel Omega beträgt {omega_4pi:.5f}")
 
-peaks = pd.read_csv("./data/line_content_results.csv")
+#peaks = pd.read_csv("./data/line_content_results.csv")
+peaks = pd.read_csv("./build/peaks.csv")
 
 
 def fedp(omega, N, A, W, t):
@@ -58,7 +59,7 @@ t = 3634  # s
 results = []
 
 for index, row in peaks.iloc[0:].iterrows():
-    N = ufloat(row['N'], row['N_err'])
+    N = ufloat(row['Inhalt'], row['Inhalt Error'])
     W = ufloat(row['Intensität'], row['Unsicherheit(I)'])  # Annahme: 'Intensität_err' ist die Spalte für die Unsicherheit in peaks.csv
     Q = fedp(omega_4pi, N, end_aktivität, W, t)
     results.append([row['Energie'], N.nominal_value, N.std_dev, W.nominal_value, W.std_dev, Q.nominal_value, Q.std_dev])
@@ -95,7 +96,7 @@ a_value = m.values['a']
 a_error = m.errors['a']
 b_value = m.values['b']
 b_error = m.errors['b']
-print(m)
+#print(m)
 print(f"Fit-Ergebnisse: a = {a_value} ± {a_error}, b = {b_value} ± {b_error}")
 
 # Fit-Kurve plotten

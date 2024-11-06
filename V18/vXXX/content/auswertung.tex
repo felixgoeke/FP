@@ -30,8 +30,7 @@
 %   \label{fig:}
 % \end{figure}
 
-\subsection{Kalibrierung des Detektors}
-
+\subsection{Kalibrierung des Detektors} \label{sec:kalibrierung}
 Um den Germaniumdetektor zu kalibrieren wird eine $^{152}\text{Eu}$-Probe verwendet und dessen Spektrum gemessen.
 Die Energie der Gamma-Quanten wird dabei aus der Literatur entnommen. 
 Des Weiteren wurde eine Untergrundmessung durchgeführt und nach einer Normierung von der $^{152}\text{Eu}$-Messung abgezogen.
@@ -65,28 +64,34 @@ Die Peaks und die zugehörigen Energien sind in Tabelle \ref{tab:eu} aufgeführt
   \begin{tabular}{S S[table-format=4] S[table-format=3.1] S}
       \toprule {$E_\text{Lit} / \si{\kilo\electronvolt}$} & {$P_\text{Lit} /\si{\percent}$} & {Kanal} & {Counts}\\
       \midrule
-      121.7817& {28.41 \pm 0.13}&1187&{10159.0 \pm 222}\\
-      344.2785& {26.59 \pm 0.12}&2380&{1806.1	\pm 83} \\
-      778.9045& {12.97 \pm 0.06}&3340&{3771.6 \pm 189} \\
-      964.079 & {14.5 \pm 0.06} &3985&{269.6 \pm	50} \\
+      121.7817& {28.41 \pm 0.13}&1187&{10137.2 \pm 100.7}\\
+      344.2785& {26.59 \pm 0.12}&2380&{1767.1 \pm 42.0} \\
+      778.9045& {12.97 \pm 0.06}&3340&{3900.4 \pm 62.5} \\
+      964.079 & {14.5 \pm 0.06} &3985&{234.3 \pm 15.3} \\
       1112.076& {13.41 \pm 0.06}&4303&{388.6 \pm	34} \\
-      1408.013& {20.85 \pm 0.08}&7548&{686.1 \pm	80} \\
+      1408.013& {20.85 \pm 0.08}&7548&{752.8 \pm 27.4} \\
       \bottomrule
   \end{tabular}
 \end{table}
 
+Für alle Peaks wurde eine Gaußfunktion der Form 
+\begin{equation}
+  f(x) = \frac{a}{\sqrt{2*\pi*\sigma^2}} \cdot \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) \label{eq:gauss}
+\end{equation}
+gefittet und anhand dessen der Inhalt der Peaks durch eine Integration der Gaußfunktion bestimmt.
+Lediglich für den Peak bei der Kanalnummer 4303 konnte keine passende Gaußfunktion gefunden werden, sodass der Inhalt händisch bestimmt wurde.
+Die Ergebnisse sind in Tabelle \ref{tab:eu} aufgeführt.
 Die Kalibrierung erfolgt durch eine lineare Regression der Form
 
 \begin{equation}
   E = a \cdot K + b
 \end{equation}
-
 und stellt damit eine Beziehung zwischen Kanalnummer $K$ und Energie $E$ her.
 Die Parameter der Regression betragen
 
 \begin{align*}
-    a = {0.228334 \pm 0.0} \, \si{\kilo\electronvolt} \\
-    b = -148.659709 \pm 0.000593 \, \si{\kilo\electronvolt} \, 
+    a &= {0.228334 \pm 0.0} \, \si{\kilo\electronvolt} \\
+    b &= -148.659709 \pm 0.000593 \, \si{\kilo\electronvolt} \, 
 \end{align*}
 
 und werden im weiteren Verlauf zur Energiebestimmung der Peaks verwendet.
@@ -134,12 +139,12 @@ Die berechnete Vollenergie-Detectionswahrscheinlichkeit ist in der Tabelle \ref{
     \begin{tabular}{S S[table-format=1.5]}
         \toprule {$E_\text{Lit} / \si{\kilo\electronvolt}$} & {$Q / \si{\percent}$} \\
         \midrule
-        121.7817&{0.06200	\pm 0.00165}\\
-        344.2785&{0.01178	\pm 0.00057}\\
-        778.9045&{0.05042	\pm 0.00264}\\
-        964.079 &{0.00322	\pm 0.0006}\\
+        121.7817&{0.06186	\pm 0.00112}\\
+        344.2785&{0.01152	\pm 0.00033}\\
+        778.9045&{0.05214	\pm 0.00115}\\
+        964.079 &{0.0028	\pm 0.00019}\\
         1112.076&{0.00502	\pm 0.00045}\\
-        1408.013&{0.00571	\pm 0.00067}\\
+        1408.013&{0.00626	\pm 0.00025}\\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -147,13 +152,14 @@ Die berechnete Vollenergie-Detectionswahrscheinlichkeit ist in der Tabelle \ref{
 Die Werte aus der Tabelle \ref{tab:fedp} sind in Abbildung \ref{fig:fedp} dargestellt.
 Des Weiteren wurde die Energieabhängigkeit der Vollenergie-Detektionswahrscheinlichkeit untersucht und mit
 \begin{equation}
+  \label{eq:Q-fit}
   Q(E) = a \cdot E^{b}
 \end{equation}
 gefittet.
 Die Parameter des Fits betragen
 \begin{align*}
-  a &= 31.6675 ± 0.0\\
-  b &= -1.3107 \pm 0.
+  a &= 25.8180 ± 3.2159\\
+  b &= -1.2758 \pm 0.2262.
 \end{align*}
 
 \begin{figure}[H]
@@ -162,3 +168,181 @@ Die Parameter des Fits betragen
   \caption{Effizienz des Germaniumdetektors in Abhängigkeit der Energie.}
   \label{fig:fedp}
 \end{figure}
+
+\subsection{Untersuchung eines monochromatischen Gamma-Spektrums}
+Das monochromatische Gamma-Spektrum des $^{137}\text{Cs}$-Strahlers ist in Abbildung \ref{fig:cs} dargestellt.
+Zu erkennen ist der Vollenergiepeak, die Compton-Kante und der Rückstreupeak. 
+Zwischen der Compton-Kante und dem Rückstreupeak ist ein Compton-Kontinuum zu erkennen.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../plots/Caesium-Peaks.pdf}
+  \caption{Spektrum des $^{137}\text{Cs}$-Strahlers.}
+  \label{fig:cs}
+\end{figure}
+
+Die Position des Vollenergiepeaks und des Rückstreupeaks wurden wie in \ref{sec:kalibrierung} beschrieben bestimmt.
+
+\subsubsection{Bestimmung der Halb- und Zehntelwertsbreite}
+Demnach befindet sich der Vollenergiepeak bei Kanal 6420 und der Rückstreupeak bei Kanal 1868.
+Des Weiteren wurde für den Vollenergiepeak eine Gaußfunktion \ref{eq:gauss} gefittet und der Inhalt des Peaks bestimmt.
+Die Parameter der nichtlinearen Regression betragen
+%A = (1.157+/-0.011)e+04, mu = 6415.86+/-0.09, sigma = 9.67+/-0.07
+\begin{align*}
+  a &= 1157 \pm 11 \\
+  \mu &= 6415.86 \pm 0.09 \\
+  \sigma &= 9.67 \pm 0.07 \, .
+\end{align*}
+Zusätzlich wurden die Halbwertsbreite und die Zehntelwertsbreite des Vollenergiepeaks bestimmt.
+Dabei gibt die Halbwertsbreite die Breite des Peaks bei der Hälfte des Maximums an und die Zehntelwertsbreite die Breite bei einem Zehntel des Maximums.
+Die Maximale Anzahl der Counts beträgt $N_\text{max} = 502.322$.
+Entsprechend der Definition der Halbwertsbreite und Zehntelwertsbreite ergibt sich
+\begin{align*}
+  N_\text{FWHM} &= 251 \, \text{Impulse} \\
+  N_\text{FWTM} &= 50 \, \text{Impulse} \, .
+\end{align*}
+Die Schnittpunkte der Gaußfunktion mit den Halbwerts- und Zehntelwertsbreiten sind in Abbildung \ref{fig:photopeak} dargestellt.
+Die Abgelesenen Kanaldifferenzen betragen
+\begin{align*}
+  \Delta K_\text{FWHM} &= 23 \, \text{Kanäle} \\
+  \Delta K_\text{FWTM} &= 42 \pm 0.29 \, \text{Kanäle} \, .
+\end{align*}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../plots/Caesium-Peak-6420.pdf}
+  \caption{Vollenergiepeak des $^{137}\text{Cs}$-Strahlers.}
+  \label{fig:photopeak}
+\end{figure}
+Für die Halbwertsbreite und die Zehntelwertsbreite ergeben sich mittels der gefitteten Gaußfunktion die Werte
+\begin{align*}
+  \text{FWHM} &= 22.77 \pm 0.16 \, \text{Kanäle} \\
+  \text{FWTM} &= 41.51 \pm 0.29 \, \text{Kanäle} \, .
+\end{align*}
+Diese Werte können mittels der in \ref{sec:kalibrierung} bestimmten Kalibrierung in Energie umgerechnet werden.
+Dabei ergeben sich die Werte
+\begin{align*}
+  \text{FWHM} &= 5.20 \pm 0.04 \, \si{\kilo\electronvolt} \\
+  \text{FWTM} &= 9.48 \pm 0.07 \, \si{\kilo\electronvolt} \, .
+\end{align*}
+Das Verhältnis der Halbwertsbreite und Zehntelwertsbreite beträgt für die gefitteten Werte
+\begin{equation*}
+  \frac{\text{FWHM}}{\text{FWTM}} = 0.5467 \pm 0.0 \, .
+\end{equation*}
+und für die abgelesenen Werte
+\begin{equation*}
+  \frac{\Delta K_\text{FWHM}}{\Delta K_\text{FWTM}} = 0.5476 \, .
+\end{equation*}
+
+\subsubsection{Untersuchung des Compton-Effekts}
+Der Inhalt der Photopeaks wurde durch die Integration der gefitteten Gaußfunktion bestimmt und ergibt sich zu $N_\text{Photo} = 11525.21 \,$ Impulsen.
+Die Energie des Photopeaks lässt sich mittels der Kalibrierung \ref{sec:kalibrierung} bestimmen 
+und beträgt $E_\text{Photo} = 1317.2446 \pm 0.0006 \, \si{\kilo\electronvolt}$.
+Scheiinbar weicht der Wert von der Literaturenergie $E_\text{Lit} = 662 \, \si{\kilo\electronvolt}$ ab um ziemlich genau den Faktor 2 ab, 
+worauf in der späteren Diskussion eingegangen wird.
+Die Comptonkante und der Rückstreupeak können mittels der Photopeakenergie (hier wurde der Literaturwert verwendet) bestimmt werden \ref{eq:Compton} und belaufen sich auf
+\begin{align*}
+  E_\text{Compton Kante,1} &= 477.65 \, \si{\kilo\electronvolt} \\
+  E_\text{Rückstreupeak,1} &= 184 \, \si{\kilo\electronvolt} \, .
+\end{align*}
+Wird die per Kalibrierung bestimmte Energie des Photopeaks verwendet, ergeben sich die Werte
+\begin{align*}
+  E_\text{Compton Kante,2} &= 1103.25 \, \si{\kilo\electronvolt} \\
+  E_\text{Rückstreupeak,2} &= 214 \, \si{\kilo\electronvolt} \, .
+\end{align*}
+Aus diesen Energien lassen sich die Kanalnummern bestimmen, indem man die Kalibrierung invers anwendet.
+Die Kanalnummer des Rückstreupeaks ist aus der Peakbestimmung \ref{fig:cs} bekannt.
+Es ergeben sich die Kanalnummern
+\begin{align*}
+  K_\text{Compton Kante,2} &= 4980.4069 \pm 0.0025 \\
+  K_\text{Rückstreupeak} &= 1868 \, .
+\end{align*}
+Der Rückstreak, die Comptonkante und das Comptonkontinuum sind in der Abbildung \ref{fig:compton} dargestellt.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../plots/Caesium-Compton-Backscatter.pdf}
+  \caption{Comptonkontinuum, Comptonkante und Rückstreupeak des $^{137}\text{Cs}$-Strahlers.}
+  \label{fig:compton}
+\end{figure}
+Das Comptonkontinuum wurde durch eine lineare Regression der Form
+\begin{equation}
+  f(x) = a \cdot x + b
+\end{equation}
+gefittet.
+Die Parameter der Regression betragen
+\begin{align*}
+  a &= -0.00183 \pm 0.00009 \\
+  b &= 2.13 \pm 0.30 \, .
+\end{align*}
+Um den Einfluss des Rückstreupeaks auf das Comptonkontinuum zu minimieren wurde für die lineare Regression ein begrenzter Ausschnitt des Spektrums verwendet.
+Die Regression ist in Abbildung \ref{fig:compton-Kontinuum} dargestellt.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../plots/Caesium-Compton-Kontinuum.pdf}
+  \caption{Lineare Regression des Comptonkontinuums.}
+  \label{fig:compton-Kontinuum}
+\end{figure}
+Daraus lässt sich der Inhalt des Comptonkontinuums bestimmen und beträgt $N_\text{Compton-Kontinuum} = 26105.179 \, \text{Impulse}$.
+
+\subsubsection{Bestimmung der Absoprionswahrscheinlichkeit}
+Die Absorptionswahrscheinlichkeit $P$ lässt sich mit der Formel \ref{eq:Extinktion} bestimmen.
+Die Extinktionskoeffizienten für den Compton-Effekt und den Photoeffekt sind 
+\begin{align*}
+  \mu_\text{Compton} &= 0.37 \, \si{\per\centi\meter} \\
+  \mu_\text{Photo} &= 0.008 \, \si{\per\centi\meter} \, .
+\end{align*}
+Die Detektorlänge beträgt $d=3.9 \si{\centi\metre}$, somit ergeben sich die Absorptionswahrscheinlichkeiten
+\begin{align*}
+  P_\text{Compton} &= 76.4 \si{\percent} \\
+  P_\text{Photo} &= 3.07 \si{\percent} \, .
+\end{align*}
+Demnach müsste der Inhalt des Comptonkontinuums um den Faktor $24.9$ höher sein als der des Photopeaks.
+Die experimentell bestimmten Werte ergeben ein Verhältnis von
+\begin{equation*}
+  \frac{N_\text{Compton-Kontinuum}}{N_\text{Photo}} = \frac{26105.179}{11525.21}= 2.265 \, .
+\end{equation*}
+
+\subsection{Aktivitätsbestimmung von $^{133}\text{Ba}$} \label{sec:aktivität}
+Die Aktivität der $^{133}\text{Ba}$-Probe wurde durch eine Messung des Spektrums bestimmt.
+Die Dauer der Messung betrug $t = 3021 \, \si{\second}$.
+Die Messdaten sind in der Abbildung \ref{fig:ba} dargestellt.
+Die prominentesten Peaks wurden identifiziert und sind in der Tabelle \ref{tab:ba} aufgeführt.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../plots/Barium.pdf}
+  \caption{Spektrum des $^{133}\text{Ba}$-Strahlers.}
+  \label{fig:ba}
+\end{figure}
+Die Aktivität der Probe soll im folgenden bestimmt werden.
+Dafür wird die Gleichung \ref{eq:Q} nach der Aktivität umgestellt.
+Für den Raumwinkel wird der bereits in \ref{sec:kalibrierung} bestimmte Wert verwendet.
+Der Inhalt der Vollenergiepeaks wird durch eine Integration der Gaußfunktion bestimmt.
+Die Effizienz $Q$ wird durch die nichtlineare Regression \ref{eq:Q-fit} bestimmt.
+Dadurch ergeben sich die in der Tabelle \ref{tab:ba} aufgeführten Werte.
+
+\begin{table}
+  \centering
+  \caption{Energien \cite{Lara-Ba} und die Effizienz $Q$ der Vollenergiepeaks der $^{133}\text{Ba}$-Probe sowie die zugeordneten Kanäle, der bestimmte Inhalt und die daraus berechnete Aktivität.}
+  \label{tab:ba}
+  \begin{tabular}{S S S S S S}
+      \toprule {$E_\text{Lit} / \si{\kilo\electronvolt}$}  & {Kanal} & {Counts} & {$Q /\si{\percent}$} & {Aktivität $A/\si{\becquerel}$}\\
+      \midrule
+      80.9979 \pm 0.11  &793  &5580.537  &0.095 \pm 0.015   &35 \pm 6\\
+      276.3989 \pm 0.12 &2685 &839.003   &0.021 \pm 0.004   &114 \pm 20\\
+      302.8508 \pm 0.05 &2940 &1868.218  &0.0176 \pm 0.0032 &116 \pm 21\\
+      356.0129 \pm 0.07 &3458 &5142.753  &0.0143 \pm 0.0026 &115 \pm 21\\
+      383.8485 \pm 0.12 &3730 &607.006   &0.0130 \pm 0.0024 &104 \pm 19\\
+      \bottomrule
+  \end{tabular}
+\end{table}
+Aus den ermittelten Aktivitäten wird der Mittelwert und die Standardabweichung bestimmt.
+Die Aktivität der $^{133}\text{Ba}$-Probe beträgt
+\begin{equation*}
+  A = 96.83 \pm 31.06 \, \si{\becquerel} \, .
+\end{equation*}
+
+\subsection{Nuklidbestimmung} \label{sec:nuklid}
+
+
+
+
+

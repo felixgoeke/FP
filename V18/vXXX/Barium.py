@@ -194,12 +194,19 @@ def linear(K, alpha, beta):
 alpha = ufloat(0.228334, 0)
 beta  = ufloat(-148.659709, 0.000593)
 
-# Energie der Peaks bestimmen
-energie_793 = linear(793, alpha, beta)
-energie_2685 = linear(2685, alpha, beta)
-energie_2940 = linear(2940, alpha, beta)
-energie_3458 = linear(3458, alpha, beta)
-energie_3730 = linear(3730, alpha, beta)
+## Energie der Peaks bestimmen
+#energie_793 = linear(793, alpha, beta)
+#energie_2685 = linear(2685, alpha, beta)
+#energie_2940 = linear(2940, alpha, beta)
+#energie_3458 = linear(3458, alpha, beta)
+#energie_3730 = linear(3730, alpha, beta)
+
+#Literaturwerte für die Energien
+energie_793 = ufloat(80.9979, 0.11)
+energie_2685 = ufloat(267.3989, 0.12)
+energie_2940 = ufloat(302.8508, 0.05)
+energie_3458 = ufloat(356.0129, 0.07)
+energie_3730 = ufloat(383.8485, 0.12)
 
 #Effizienz bestimmen
 def q_energy(e, a, b):
@@ -207,10 +214,10 @@ def q_energy(e, a, b):
     Q = a * e** b 
     return Q
 
-# Fitparameter für die Effizienz
-#Fit-Ergebnisse: a = 19.84894362204279 ± 2.887590018432524, b = -1.3343701493052662 ± 0.026767376407957545
-a = ufloat(19.84894362204279, 2.887590018432524)
-b = ufloat(-1.3343701493052662, 0.026767376407957545)
+#Fit-Parameter für die Energieabh. von Q
+# a = 25.81800117432799 ± 3.21588726043368, b = -1.2758238669168847 ± 0.02262353553909182
+a = ufloat(25.81800117432799, 3.21588726043368)
+b = ufloat(-1.2758238669168847, 0.02262353553909182)
 
 #Effizienz der Peaks bestimmen
 effizienz_793 = q_energy(energie_793, a, b)
@@ -235,17 +242,28 @@ p_3458 = ufloat(62.05, 0.19) #in prozent
 p_3730 = ufloat(8.94, 0.06) #in prozent
 
 def aktivitaet(inhalt, effizienz, p, omega,t):
-    return inhalt * omega / (effizienz * (0.01)* p * t)
+    return inhalt * (1/omega) / (effizienz * p * t)
 
-aktivitaet_793 = aktivitaet(inhalt_793, effizienz_793, p_793, omega_4pi,t)*10
-aktivitaet_2685 = aktivitaet(inhalt_2685, effizienz_2685, p_2685, omega_4pi,t)*10
-aktivitaet_2940 = aktivitaet(inhalt_2940, effizienz_2940, p_2940, omega_4pi,t)*10
-aktivitaet_3458 = aktivitaet(inhalt_3458, effizienz_3458, p_3458, omega_4pi,t)*10
-aktivitaet_3730 = aktivitaet(inhalt_3730, effizienz_3730, p_3730, omega_4pi,t)*10
+aktivitaet_793 = aktivitaet(inhalt_793, effizienz_793, p_793, omega_4pi,t)
+aktivitaet_2685 = aktivitaet(inhalt_2685, effizienz_2685, p_2685, omega_4pi,t)
+aktivitaet_2940 = aktivitaet(inhalt_2940, effizienz_2940, p_2940, omega_4pi,t)
+aktivitaet_3458 = aktivitaet(inhalt_3458, effizienz_3458, p_3458, omega_4pi,t)
+aktivitaet_3730 = aktivitaet(inhalt_3730, effizienz_3730, p_3730, omega_4pi,t)
 
 print(f"Aktivität des {energie_793}-keV-Peaks: {aktivitaet_793}")
 print(f"Aktivität des {energie_2685}-keV-Peaks: {aktivitaet_2685}")
 print(f"Aktivität des {energie_2940}-keV-Peaks: {aktivitaet_2940}")
 print(f"Aktivität des {energie_3458}-keV-Peaks: {aktivitaet_3458}")
 print(f"Aktivität des {energie_3730}-keV-Peaks: {aktivitaet_3730}")
+
+# Mittelwert und Standardabweichung der Aktivitäten berechnen
+aktivitaeten = [aktivitaet_793, aktivitaet_2685, aktivitaet_2940, aktivitaet_3458, aktivitaet_3730]
+
+# Mittelwert der Aktivitäten
+mittelwert_aktivitaet = np.mean([a.n for a in aktivitaeten])
+# Standardabweichung der Aktivitäten
+std_aktivitaet = np.std([a.n for a in aktivitaeten])
+
+print(f"Mittelwert der Aktivitäten: {mittelwert_aktivitaet}")
+print(f"Standardabweichung der Aktivitäten: {std_aktivitaet}")
 

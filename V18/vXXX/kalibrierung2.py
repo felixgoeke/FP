@@ -1,4 +1,6 @@
 import pandas as pd
+from scipy.integrate import quad
+from uncertainties import ufloat
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
@@ -111,6 +113,76 @@ plt.legend()
 plt.tight_layout()
 plt.savefig("./plots/Europium-Peaks.pdf")
 plt.clf()
+
+#erstelle eine Spalte "Inhalt" im Peaks-DataFrame, falls sie noch nicht existiert
+if "Inhalt" not in peaks.columns:
+    peaks["Inhalt"] = np.nan
+if "Inhalt Error" not in peaks.columns:
+    peaks["Inhalt Error"] = np.nan
+
+# Fitfunktion für die Peaks
+def gauss(x, A, mu, sigma):
+    return (A / (np.sqrt(2 * np.pi) *sigma)) * np.exp(-((x - mu) ** 2) / (2 * sigma ** 2))
+
+#Inhalt des Peaks
+def integrate_gauss(A, mu, sigma):
+    integral, _ = quad(lambda x: gauss(x, A, mu, sigma), x_data.min(), x_data.max())
+    return integral
+
+# Fitten der Peaks mit der Gauss-Funktion
+# Den ersten Peak weglassen
+for peak in peaks["peaks"]:
+    # Bereich um den Peak herum definieren
+    window = 20
+    x_data = europium["index"][peak - window:peak + window]
+    y_data = europium["data"][peak - window:peak + window]
+
+    # LeastSquares-Kostenfunktion definieren
+    least_squares = LeastSquares(x_data, y_data, np.sqrt(y_data), gauss)
+
+    # Minuit-Objekt erstellen und anpassen
+    m = Minuit(least_squares, A=y_data.max(), mu=peak, sigma=5)
+    m.migrad()
+
+    # Fit-Ergebnisse extrahieren
+    A_fit, mu_fit, sigma_fit = ufloat(m.values["A"],m.errors["A"]), ufloat(m.values["mu"],m.errors["mu"]), ufloat(m.values["sigma"],m.errors["sigma"])
+    #print(m)
+    print(f"Peak at {peak}: A = {A_fit}, mu = {mu_fit}, sigma = {sigma_fit}")
+
+    # Berechnung des Inhalts des Photopeaks
+    photo_peak_A = m.values["A"]
+    photo_peak_mu = m.values["mu"]
+    photo_peak_sigma = m.values["sigma"]
+
+    photo_peak_content = integrate_gauss(A_fit.n, mu_fit.n, sigma_fit.n)
+    print(f"Inhalt des {peak}-Photopeaks: {photo_peak_content}")
+    # Speichern der Peak-Daten in einer CSV-Datei
+    # Erstelle eine Spalte "Inhalt" im Peaks-DataFrame, falls sie noch nicht existiert
+
+    # Speichere den Photopeak-Inhalt in der zum Peak passenden Zeile
+    peaks.loc[peaks["peaks"] == peak, "Inhalt"] = round(photo_peak_content, 1)
+    peaks.loc[peaks["peaks"] == peak, "Inhalt Error"] = round(np.sqrt(photo_peak_content),1)
+
+    # Speichern der Peak-Daten in einer CSV-Datei
+    #peaks.to_csv("./build/peaks.csv", index=False)
+
+    # Plotten des Fits und der Daten
+    plt.figure(figsize=(10, 5))
+    #plt.bar(x_data, y_data, linewidth=2, width=1.1,alpha=0.2, label="Data", color="royalblue")
+    plt.plot(x_data, y_data, "x", label="Data", color="royalblue")
+    plt.plot(x_data, gauss(x_data, A_fit.n, mu_fit.n, sigma_fit.n), color="orange", label="Gaussian Fit")
+    plt.xlabel("Channels")
+    plt.ylabel("Signals")
+    plt.legend()
+    #plt.title(f"Peak at {peak}")
+    plt.grid(True, linewidth=0.1)
+    plt.tight_layout()
+    plt.savefig(f"./plots/Europium-Peak-{peak}.pdf")
+    plt.clf()
+
+#händische Countzählung für Peak 4303
+peaks.loc[peaks["peaks"] == 4303, "Inhalt"] =  388.6 
+peaks.loc[peaks["peaks"] == 4303, "Inhalt Error"] =  34
 
 # Nach der Kanalnummer aufsteigend sortieren
 peaks.sort_values(by="peaks", inplace=True, ascending=True)
