@@ -1,2 +1,93 @@
 \section{Diskussion}
   \label{sec:Diskussion}
+Im folgenden werden die Ergebnisse der Messungen diskutiert.
+
+Im Allgemeinen wurde bei jeder Messung der Peak Nahe des nullten Kanals nicht in die Auswertung einbezogen.
+Dieser Peak tritt in allen Messungen, auch der Untergrundmessung auf, und scheint somit nicht Nuklid-spezifisch zu sein.
+Der Peak ist vermutlich auf eine Ansammlung aller niedrigen Energien zurückzuführen, die nicht hoch genug für die Detektion sind.
+Gleich verhält es sich mit den Signalen in den sehr hoben Kanälen, die ebenfalls nicht in die Auswertung einbezogen wurden.
+
+\subsection{Energiekalibrierung}
+Die Ergebnisse für die Kalibrierung zwischen Kanalnummer und Energie sind in Tabelle \ref{tab:kalibrierung} aufgeführt.
+\begin{table}
+  \centering
+  \caption{Fitparameter der Kalibrierung zwischen Kanalnummer und Energie.}
+  \label{tab:kalibrierung}
+  \begin{tabular}{c c}
+    \toprule
+    $a$ & $b$ \\
+    \midrule
+    0.228334 \pm 0.0 & -148.659709 \pm 0.000593 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+Während der Proportionalitätsfaktor $a$ mit einer Unsicherheit von $0.0$ sehr genau bestimmt werden konnte, 
+führt das Ergebnis für den Fitparameter $b$ zu unphysikalischen Ergebnissen, da Kanäle kleiner 676 negative Energien messen würden.
+Ideal wäre, wenn der 0. Kanal eine Energie von 0 MeV messen würde.
+Ursächlich könnte eine falsche Zuordnung der Literaturenergien zu den Peaks sein.
+Da die Kalibrierung für alle weiteren Messungen verwendet wird, sind auch die Ergebnisse der weiteren Messungen mit Vorsicht zu genießen.
+
+\subsection{Vollenergienachweiswahrscheinlichkeit}
+Auffällig bei der Bestimmung der Vollenergienachweiswahrscheinlichkeit ist, 
+dass die Effizienz $Q$ des Peaks der Kanalnummer 3340, welchem die Literaturenergie von $778.9045 \si{\kilo\electronvolt}$ zugeorndet wurde,
+deutlich von der nichtlinearen Regression abweicht.
+Dies könnte an einer falsch ermittelten Anzahl der Signale liegen.
+Die Anzahl der Signale wurde mittels einer Gaußfunktion bestimmt, die Abbildung dieser ist im Anhang \ref{fig:Europium-Peak-3340} zu finden.
+In der Abbildung ist zu erkennen, dass die gefittete Gaußfunktion allerdings gut zu den Messwerten passt.
+Demnach ist eine weitere Ursache für die große Abweichung erneut eine falsche Zuordnung der Literaturenergie zu dem Peak, wie auch bei der Kalibrierung.
+
+\subsection{Bestimmung der Halbwertsbreite und der Zehntelwertsbreite}
+Der experimentell bestimmte Wert für das Verhältnis von Halbwertsbreite zu Zehntelwertsbreite beträgt $0.5476$ und 
+liegt damit sehr nah an dem Proportionalitätsfaktor der gefitteten Gaußfunktion von $0.5467$.
+Die relative Abweichung 
+\begin{equation}
+  \frac{\Delta x}{x} = \frac{0.5476 - 0.5467}{0.5467} = 0.16 \si{\percent}
+\end{equation}
+ist sehr gering und zeigt, dass die Gaußfunktion ein gutes Modell für die Messwerte ist.
+
+\subsection{Untersuchung des Compton-Kontinuums}
+Bei der Untersuchung des Comptonkontinuums ergab sich mittels der linearen Regression der Energiekalibrierung
+für den Vollenergiepeak bei Kanalnummer 6420 eine Energie von $E_\text{Photo}=1317.2446\pm 0.0006 \si{\kilo\electronvolt}$.
+Der Literaturwert beträgt $E_\text{Photo}=662 \si{\kilo\electronvolt}$.
+Demnach ist die experimentell bestimmte Energie um den Faktor $1.99$ größer als der Literaturwert.
+Diese fast exakte Abweichung um den Faktor 2 scheint mehr auf einen systematischen Fehler, vermutlich in der Auswertung selbst, 
+als auf einen statistischen Fehler zurückzuführen zu sein.
+Da der Fehler nicht gefunden werden konnte, 
+wurde diese Auffälligkeit in den weiteren Auswertungen berücksichtigt, 
+um dennoch sinnvolle Ergebnisse zu erhalten.
+In der Abbildung \ref{fig:compton} ist zu erkennen,
+dass die berechnete Kanalnummer für die Comptonkante höher ist als der Bereich, 
+in dem die Anzahl der Signale des Comptonkontinuums deutlich abfällt.
+Da die Comptonkante, anders als in der Theorie, nicht scharf ist, liegt das Ergebnis im Rahmen der Erwartungen.
+Die berechnete Kanalnummer für den Rückstreupeak und die Kanalnummer, welche mittels der Peak-Funktion bestimmt wurde,
+unterscheiden sich, ähnlich wie die Energie des Vollenergiepeaks, um den Faktor $1.96$.
+
+\subsection{Bestimmung des Absorptionswahrscheinlichkeiten}
+Weitergehend wurden die Absorptionswahrscheinlichkeiten für den Comptoneffekt und den Photoeffekt bestimmt
+und mit den gemessenen Signalen verglichen.
+Die Berechnung der Absorptionswahrscheinlichkeiten ergab, dass der Inhalt des Comptonkontinuums um den Faktor $24.9$ größer ist als der Inhalt des Vollenergiepeaks.
+Jedoch ergaben die experimentell bestimmten Werte ein Verhältnis von $2.265$.
+Dies weicht demnach stark von dem theoretischen Wert ab.
+Eine Ursache für diese Abweichung kann darin liegen,
+dass die $\gamma$-Quanten nach dem Compton-Effekt weiterhin Energie besitzen und somit auch noch in den Vollenergiepeak detektiert werden.
+
+\subsection{Aktivitätsbestimmung}
+Die Aktivitäten liegen, bis auf den Wert für den ersten Vollenergiepeak, in der gleichen Größenordnung.
+Durch die starke Abweichung des ersten Vollenergiepeaks, ergibt sich eine große Unsicherheit der ermittelten Aktivität.
+Die Ursache könnte darin liegen, dass der Peak fälschlicherweise der Probe zugeordnet wurde und eher dem Untergrund zuzuordnen ist.
+Lässt man diesen Wert außer Acht, so ergibt sich eine Aktivität von $A = 112.21 \pm 4.75 \si{\becquerel}$ und besitzt eine deutlich geringere Unsicherheit.
+
+\subsection{Nuklidbestimmung}
+Wie bereits aufgeführt, scheint es einen Fehler bei der Energiekalibrierung zu geben.
+Daher wurde, um dennoch die Energien der Peaks Nukliden zuordnen zu können, der Fehler der Kalibrierung berücksichtigt und der Faktor miteonbezogen.
+Mit Berücksichtigung des genannten Faktors, ergeben sich die in Tabelle \ref{tab:unbekannt} aufgeführten Ergebnisse.
+Die meisten Vollenergiepeaks wurden $^{229}Th$ zugeordnet. Ein Mutternuklid von Thorium ist $^{233}U$.
+Dies im Zusammenhang mit der gelben Farbe der Probe, die auf Uran hinweist, könnte die Zuordnung der Peaks zu Thorium erklären.
+Eine Energie wurde $^{233}Pa$ zugeordnet, welches ein Mutternuklid ebenfalls von $^{233}U$ ist.
+Ein weiteres Nuklid, welches in der Probe enthalten sein könnte ist $^{232}U$.
+Dieses zerfällt über $^{228}Th$ und $^{224}Ra$. Die Vollenergiepeaks dieser Nuklide können ebenfalls, jedoch mit größeren Abweichungen, den gemessenen Peaks zugeordnet werden.
+
+\subsection{Zusammenfassung}
+Insgesamt sind alle Ergebnisse, welche die Energiekalibrierung betreffen, mit Vorsicht zu genießen, da sich dort ein systematischer Fehler eingeschlichen hat.
+Mit Betrachtung des dort genannten Faktors, sind die Ergebnisse jedoch sinnvoll und liefern plausible Ergebnisse.
+

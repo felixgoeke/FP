@@ -61,9 +61,9 @@ peaks = peaks.drop([0])
 plt.figure(figsize=(21, 9))
 plt.bar(barium["index"], barium["daten"], linewidth=2, width=1.1, label=r"$^{133}\mathrm{Ba}$", color="royalblue")
 plt.plot(peaks["peaks"], peaks["peak_heights"], "x", color="red", label="Peaks")
-plt.xlabel(r"Channels")
-plt.ylabel(r"Signals")
-plt.title(r"Barium Data")
+plt.xlabel(r"Kanal")
+plt.ylabel(r"Signal")
+plt.title(r"Barium Daten")
 plt.grid(True, linewidth=0.1)
 plt.savefig("./plots/Barium.pdf")
 plt.clf()
@@ -162,11 +162,11 @@ with open("./data/barium_fit_data.txt", "a") as f:
     f.write(f"Peak at {peak}: A = {A_fit}, mu = {mu_fit}, sigma = {sigma_fit}, Inhalt:{photo_peak_content}\n ")
 
 # Plot the data and fit
-plt.figure(figsize=(10, 5))
-plt.plot(x_data, y_data, "x", label="Data", color="royalblue")
-plt.plot(x_data, gauss(x_data, A_fit.n, mu_fit.n, sigma_fit.n), color="orange", label="Gaussian Fit")
-plt.xlabel("Channels")
-plt.ylabel("Signals")
+plt.figure(figsize=(21, 9))
+plt.plot(x_data, y_data, "x", label="Daten", color="royalblue")
+plt.plot(x_data, gauss(x_data, A_fit.n, mu_fit.n, sigma_fit.n), color="orange", label="Gauss Fit")
+plt.xlabel("Kanal")
+plt.ylabel("Signal")
 plt.legend()
 plt.title(f"Peak at {peak} Version 2")
 plt.grid(True, linewidth=0.1)
@@ -264,6 +264,13 @@ mittelwert_aktivitaet = np.mean([a.n for a in aktivitaeten])
 # Standardabweichung der Aktivitäten
 std_aktivitaet = np.std([a.n for a in aktivitaeten])
 
+aktivitaeten_2 =  [aktivitaet_2685, aktivitaet_2940, aktivitaet_3458, aktivitaet_3730]
+mittelwert_aktivitaet_2 = np.mean([a.n for a in aktivitaeten_2])
+std_aktivitaet_2 = np.std([a.n for a in aktivitaeten_2])
+
 print(f"Mittelwert der Aktivitäten: {mittelwert_aktivitaet}")
 print(f"Standardabweichung der Aktivitäten: {std_aktivitaet}")
+
+print(f"Mittelwert der Aktivitäten ohne 793-keV-Peak: {mittelwert_aktivitaet_2}")
+print(f"Standardabweichung der Aktivitäten ohne 793-keV-Peak: {std_aktivitaet_2}")
 

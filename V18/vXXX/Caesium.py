@@ -79,8 +79,8 @@ plt.xticks(np.linspace(0, 8191, 10))
 plt.yticks(np.linspace(caesium["daten"].min(), caesium["daten"].max(), 10))
 
 plt.ylim(caesium["daten"].min() - 30)
-plt.xlabel(r"Channels")
-plt.ylabel(r"Signals")
+plt.xlabel(r"Kanal")
+plt.ylabel(r"Signal")
 
 plt.grid(True, linewidth=0.1)
 plt.legend()
@@ -141,11 +141,11 @@ for peak in peaks["peaks"].iloc[1:]:
     plt.figure(figsize=(10, 5))
     #plt.bar(x_data, y_data, linewidth=2, width=1.1,alpha=0.2, label="Data", color="royalblue")
     plt.plot(x_data, y_data, "x", label="Data", color="royalblue")
-    plt.plot(x_data, gauss(x_data, A_fit.n, mu_fit.n, sigma_fit.n), color="orange", label="Gaussian Fit")
+    plt.plot(x_data, gauss(x_data, A_fit.n, mu_fit.n, sigma_fit.n), color="orange", label="Gauss Fit")
     plt.plot(fwhm_x, fwhm_y, 'r--', label='FWHM')
     plt.plot(fwtm_x, fwtm_y, 'g--', label='FWTM')
-    plt.xlabel("Channels")
-    plt.ylabel("Signals")
+    plt.xlabel("Kanal")
+    plt.ylabel("Signal")
     plt.legend()
     #plt.title(f"Peak at {peak}")
     plt.grid(True, linewidth=0.1)
@@ -220,12 +220,12 @@ plt.fill_betweenx(
     x2=compton_kante_kanal.n,
     color='gray',
     alpha=0.3,
-    label='Backscatter to Compton-Kante 1/2'
+    label='Compton-Kontinuum'
 )
 
 # Plot-Einstellungen
-plt.xlabel(r"Channels")
-plt.ylabel(r"Signals")
+plt.xlabel(r"Kanal")
+plt.ylabel(r"Signal")
 plt.legend()
 plt.grid(True, linewidth=0.1)
 plt.tight_layout()
@@ -259,8 +259,8 @@ plt.figure(figsize=(10, 5))
 #plt.plot(x_data, y_data, "x", label="Data", color="royalblue")
 plt.bar(x_data,y_data,linewidth=2, width=1.1, label="Data", color="royalblue")
 plt.plot(x_data, compton_kontinuum(x_data, a_fit.n, b_fit.n), color="orange",linewidth=2 ,label="Compton-Kontinuum Fit")
-plt.xlabel("Channels")
-plt.ylabel("Signals")
+plt.xlabel("Kanal")
+plt.ylabel("Signal")
 plt.legend()
 plt.grid(True, linewidth=0.1)
 plt.tight_layout()
@@ -293,6 +293,12 @@ backscatter_peak_theorie_halbe = backscatter(photo_energie/2)
 
 print(f"Der theoretischer Backscatter-Peak liegt bei {backscatter_peak_theorie:.3}")
 print(f"Der theoretischer Backscatter-Peak (halbe) liegt bei {backscatter_peak_theorie_halbe:.3}")
+
+#Umrechnung wieder zurück in Kanal
+backscatter_peak_kanal = linear_invers(backscatter_peak_theorie, alpha.n, beta.n)
+backscatter_peak_kanal2 = linear_invers(backscatter_peak_theorie_halbe, alpha.n, beta.n)
+print(f"Der theoretischer Backscatter-Peak liegt bei Kanal {backscatter_peak_kanal:4.3}")
+print(f"Der theoretischer Backscatter-Peak (halbe) liegt bei Kanal {backscatter_peak_kanal2:3.3}")
 
 def absorption(mu,d):
     return (1 - np.exp(-mu*d))*100 #in Prozent

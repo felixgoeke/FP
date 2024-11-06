@@ -105,8 +105,8 @@ plt.yticks(np.linspace(europium["data"].min(), europium["data"].max(), 10))
 
 plt.ylim(europium["data"].min() - 30)
 
-plt.xlabel(r"Channels")
-plt.ylabel(r"Signals")
+plt.xlabel(r"Kanal")
+plt.ylabel(r"Signal")
 
 plt.grid(True, linewidth=0.1)
 plt.legend()
@@ -171,8 +171,8 @@ for peak in peaks["peaks"]:
     #plt.bar(x_data, y_data, linewidth=2, width=1.1,alpha=0.2, label="Data", color="royalblue")
     plt.plot(x_data, y_data, "x", label="Data", color="royalblue")
     plt.plot(x_data, gauss(x_data, A_fit.n, mu_fit.n, sigma_fit.n), color="orange", label="Gaussian Fit")
-    plt.xlabel("Channels")
-    plt.ylabel("Signals")
+    plt.xlabel("Kanal")
+    plt.ylabel("Signal")
     plt.legend()
     #plt.title(f"Peak at {peak}")
     plt.grid(True, linewidth=0.1)
@@ -250,8 +250,8 @@ with open("./build/Fitparameter_Kalib.txt", "w") as file:
 peaks.to_csv("./build/peaks.csv", index=False)
 
 plt.legend(title="\n".join(fit_info), frameon=False)
-plt.xlabel(r"$\mathrm{Channels}$")
-plt.ylabel(r"$\mathrm{Energy}/\mathrm{keV}$")
+plt.xlabel(r"$\mathrm{Kanal}$")
+plt.ylabel(r"$\mathrm{Energie}/\mathrm{keV}$")
 plt.tight_layout()
 plt.savefig("./plots/Europium-Fit.pdf")
 plt.clf()

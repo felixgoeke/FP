@@ -32,8 +32,10 @@
 
 \subsection{Kalibrierung des Detektors} \label{sec:kalibrierung}
 Um den Germaniumdetektor zu kalibrieren wird eine $^{152}\text{Eu}$-Probe verwendet und dessen Spektrum gemessen.
+Die Messung dauerte $t = 3634 \, \si{\second}$.
 Die Energie der Gamma-Quanten wird dabei aus der Literatur entnommen. 
 Des Weiteren wurde eine Untergrundmessung durchgeführt und nach einer Normierung von der $^{152}\text{Eu}$-Messung abgezogen.
+Die Untergrundmessung dauerte $t = 78108 \, \si{\second}$.
 Die Normierung bezieht sich auf die unterschiedlichen Messzeiten von Europium- und Untergrundmessung.
 Das Spektrum der Untergrundstrahlung ist in Abbildung \ref{fig:untergrund} dargestellt.
 
@@ -171,6 +173,7 @@ Die Parameter des Fits betragen
 
 \subsection{Untersuchung eines monochromatischen Gamma-Spektrums}
 Das monochromatische Gamma-Spektrum des $^{137}\text{Cs}$-Strahlers ist in Abbildung \ref{fig:cs} dargestellt.
+Die Messung dauerte $t = 3546 \, \si{\second}$.
 Zu erkennen ist der Vollenergiepeak, die Compton-Kante und der Rückstreupeak. 
 Zwischen der Compton-Kante und dem Rückstreupeak ist ein Compton-Kontinuum zu erkennen.
 
@@ -256,6 +259,7 @@ Es ergeben sich die Kanalnummern
   K_\text{Compton Kante,2} &= 4980.4069 \pm 0.0025 \\
   K_\text{Rückstreupeak} &= 1868 \, .
 \end{align*}
+Die aus der Energie bestimmte Kanalnummer für den Rückstreupeak beträgt $K_\text{Rückstreupeak} = 955$.
 Der Rückstreak, die Comptonkante und das Comptonkontinuum sind in der Abbildung \ref{fig:compton} dargestellt.
 \begin{figure}[H]
   \centering
@@ -322,7 +326,7 @@ Dadurch ergeben sich die in der Tabelle \ref{tab:ba} aufgeführten Werte.
   \centering
   \caption{Energien \cite{Lara} und die Effizienz $Q$ der Vollenergiepeaks der $^{133}\text{Ba}$-Probe sowie die zugeordneten Kanäle, der bestimmte Inhalt und die daraus berechnete Aktivität.}
   \label{tab:ba}
-  \begin{tabular}{S S S S S}
+  \begin{tabular}{c S[table-format=4.0] S[table-format=4.3] c S}
       \toprule {$E_\text{Lit} / \si{\kilo\electronvolt}$}  & {Kanal} & {Counts} & {$Q /\si{\percent}$} & {Aktivität $A/\si{\becquerel}$}\\
       \midrule
       80.9979 \pm 0.11  &793  &5580.537  &0.095 \pm 0.015   &35 \pm 6\\
@@ -359,27 +363,29 @@ Da bei der Energiebestimmung des Photopeaks der Caesiumprobe ein systematischer 
   \centering
   \caption{Energien und die Kanäle der Vollenergiepeaks der unbekannten Probe sowie die zugeordneten Nuklide.}
   \label{tab:unbekannt}
-  \begin{tabular}{S S S}
-      \toprule {Kanal} & {$E / \si{\kilo\electronvolt}$} &  {Nuklid} \\
+  \begin{tabular}{S[table-format=4.0] S c S}
+      \toprule {Kanal} & {$E / \si{\kilo\electronvolt}$} &  {Nuklid} & {$E_\text{Lit}$} \\
       \midrule
-      620 &-3.54631\pm 0.00030  & - \\
-      753 &11.63790\pm 0.00030  & \\
-      904 &28.87711\pm 0.00030  & \\
-      1100&51.25385\pm 0.00030  & \\
-      1405&86.07478\pm 0.00030  & \\
-      1507&97.71981\pm 0.00030  & \\
-      1810&132.31242\pm 0.00030 & \\
-      2353&194.30510\pm 0.00030 & \\
-      2618&224.55935\pm 0.00030 & \\
-      2868&253.10110\pm 0.00030 & \\
-      3416&315.66462\pm 0.00030 & \\
-      5909&600.28295\pm 0.00030 & \\
-      6458&662.96063\pm 0.00030 & \\
-      7449&776.10013\pm 0.00030 & \\
+      620 &-3.54631\pm 0.0003  &         &  \\
+      753 &11.63790\pm 0.0003  & Th-229  & 13.244 \\
+      904 &28.87711\pm 0.0003  & Th-229  & 28.288 \\
+      1100&51.25385\pm 0.0003  & Th-229  & 51.0 \pm 0.03\\
+      1405&86.07478\pm 0.0003  & Th-229  & 86.3 \pm 0.03 \\
+      1507&97.71981\pm 0.0003  & Th-229  & 97.37 \pm 0.04 \\
+      1810&132.31242\pm 0.0003 & Th-229  & 132.1 \\
+      2353&194.30510\pm 0.0003 & Th-228  & 191.351 \pm 0.11\\
+      2618&224.55935\pm 0.0003 & Th-229  & 224.33 \pm 0.19 \\
+      2868&253.10110\pm 0.0003 & Th-229  &255.91 \pm 0.02 \\
+      3416&315.66462\pm 0.0003 & Th-229  & 315.39 \pm 0.13 \\
+      5909&600.28295\pm 0.0003 & Pa-233  & 599.3  \pm 0.02 \\
+      6458&662.96063\pm 0.0003 & Th-228  & 663.88 \pm 0.08\\
+      7449&776.10013\pm 0.0003 & U-232   & 774.05 \pm 0.09 \\
       \bottomrule
   \end{tabular}
 \end{table}
 
+Ein mögliches Mutternuklid von $^{229}Th$ ist $^{233}U$, was zu der gelblichen Färbung der Probe passen würde.
+Ein Tochternuklid von $^{233}Pa$ ist $^{233}U$.
 
 
 
