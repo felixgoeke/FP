@@ -35,7 +35,7 @@ das Elektron in den niedrigeren Zustand übergeht und ein weiteres kohärente Ph
     \caption{Übergänge zwischen Energieniveaus\cite{Eichler20152}.}
     \label{fig:Prozesse}
 \end{figure}
-Damit die für den Laser wichtige Besetzungsinversion erzeugt wird, muss der Laser mindestens ein 3-Niveau-System besitzen.
+\noindent Damit die für den Laser wichtige Besetzungsinversion erzeugt wird, muss der Laser mindestens ein 3-Niveau-System besitzen.
 Denn in einem 2-Niveau System würden sich stimulierte Emission und Absorption gegenseitig aufheben, da die Wahrscheinlichkeit für beide Prozesse gleich ist.
 In einem Halbleiterlaser mit einer kontinuierlichen Bandstruktur ist dies automatisch gegeben.
 \subsection{Halbleiter}
@@ -71,7 +71,79 @@ Dies ist schematisch in Abbildung \ref{fig:PN} dargestellt.
     \label{fig:PN}
 \end{figure}
 \subsection{Funktionsweise des Diodenlasers}
+Der grundlegende Aufbau des verwendeten Halbleiterchips, der für diesen Laser verwendet wurde ist in Abbildung \ref{fig:Chip} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{pictures/Chip.png}
+    \caption{Aufbau eines Halbleiterlasers \cite{teachspin}.}
+    \label{fig:Chip}
+\end{figure}
+\noindent Grundlegend arbeitet der Laser wie eine LED, welche fortlaufend stimmuliert wird. Die Diode ist in FLießrichtung 
+an eine äußere Spannung angeschlossen. Diese versorgt die Diode mit fortlaufend neuen Ladungen in der Sperrschicht 
+zwischen p- und n-dotiertem Halbleiter müssen die Ladungen das innere elektrische Feld der Diode überwinden und sammeln sich deswegen in der Region des Übergangs.
+Dies wird in Abbildung  \ref{fig:Chip} als aktive Schicht bezeichnet. Dort können Ladungen spontan mit Löchern unter Aussendung eines Photons rekombinieren.
+Dies ist das Prinzip jeder LED. Dieses Licht ist allerdings weder allzu intensiv noch kohärent. Außerdem ist die Wellenlänge auf Grund der ausgedehnten Bänder 
+noch nicht allzu Präzise. Die Oberflächen des Kristalls sind nun so beschichtet, dass Sie sehr reflektierend sind. Dadurch passiert das Licht die aktive Schicht viele 
+Male und induziert so durch stimmulierte Emission weitere Übergänge zwischen den Bändern. Das dabei entstehende Licht ist kohärent und bei genügend hohem Strom kann sich 
+innerhalb des Kristalls stehende Wellen mit festen Moden ausbilden. Dies wird innerer Resonator genannt.
+Der Übergang zwischen den Bändern ist stark Temperaturabhängig, weswegen die Wellenlänge mit dem höchsten Nettogewinn auch von der Temperatur abhängig ist.
+Da durch den Halbleiter Strom fließt, kann auch durch die Stromstärke die Temperatur und somit die Wellenlänge eingestellt werden. 
+Die Stromstärkenabhängigkeit ist in Abbildung \ref{fig:Strom} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{pictures/Strom.png}
+    \caption{Stromstärkenabhängigkeit der Wellenlänge eines Lasers \cite{teachspin}.}
+    \label{fig:Strom}
+\end{figure}
+
 \subsection{Littrow-Konfiguration}
+Die Littrow-Konfiguration ist eine spezielle Konfiguration eines Lasers, bei der ein Kristall als Resonatorspiegel dient.
+Die Konfiguration ist in Abbildung \ref{fig:Littrow} dargestellt. Der reflektierte Anteil wird ausgekoppelt und kann für optische Experimente genutzt werden.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{pictures/Littrow.png}
+    \caption{Littrow-Konfiguration eines Lasers \cite{teachspin}.}
+    \label{fig:Littrow}
+\end{figure}
+\noindent Zusätzlich bilden sich jedoch gemäß der Bragg-Bedingung
+\begin{equation}
+    2d\sin(\theta)=m\lambda
+\end{equation}
+mit der Gitterkonstanten $d$, dem Beugungswinkel $\theta$, der Ordnung $m$ und der Wellenlänge $\lambda$ Beugungsmaxima aus. 
+Der Kristall ist nun so positioniert, dass das 1. Beugungsmaximum auf den Halbleiter zurückfällt.
+Der Anteil wird dann wieder im inneren Resonator verstärkt und irgendwann ausgekoppelt. Dadurch hat der Kristall 
+die Wirkung eines weiteren Resonatorspiegels mit der Länge $L$. Damit bildet der Halbleiter mit Kristall einen externen Resonator
+mit einer eigenen Modenstruktur. Auf Grund der größeren Länge liegen die einzelnen Moden gemäß 
+\begin{equation}
+    \Delta \nu = \frac{c}{2L}
+\end{equation}
+näher beieinander. Die Moden sind dafür schärfer. In Summe ergeben sich so 4 verschiedene Wellenlängenabhängigkeiten der Intensität.
+Diese sind in Abbildung \ref{fig:Moden} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{pictures/Moden.png}
+    \caption{Modenstruktur eines Lasers \cite{teachspin}.}
+    \label{fig:Moden}
+\end{figure}
+\noindent Eine Überlagerung der Bragg-Bedingung mit dem externen Resonator führt zu der Intensitätsabhängigkeit in Abbildung \ref{fig:Moden1}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{pictures/Moden1.png}
+    \caption{Intensitätsabhängigkeit der überlagerten Moden \cite{teachspin}.}
+    \label{fig:Moden1}
+\end{figure}
+\noindent Nun kann über Veränderung des Kristallwinkels, des Stroms oder der Temperatur die Modenstruktur verschoben werden.
+Da praktisch die gesamte Energie in einer Mode gespeichert wird, bildet sich immer nur die Mode mit dem höchsten Nettogewinn aus. 
+Dies kann bei leichter Veränderung der Wellenlängenabhängigkeit, wie es beispielsweise in der Spektroskopie erwünscht ist, um einen schmalen 
+Wellenlängenbereich zu untersuchen, zu "Mode Hoping" führen wie es in Abbildung \ref{fig:Moden2} dargestellt ist.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{pictures/Moden2.png}
+    \caption{Mode Hoping eines Lasers \cite{teachspin}.}
+    \label{fig:Moden2}
+\end{figure}
+\noindent Wenn sich die Maxima des externen Resonators zu sehr gegeneinander verschoben haben, wird ab einem bestimmten Punkt eine andere Interne Mode verstärkt und 
+die Wellenlänge springt zwischen diesen beiden Inneren Moden. Für Spektroskopie sollte das vermieden werden.
 \subsection{Zeeman-Aufspaltung des Rubidium-Spektrums}
 % \begin{equation}
 %     \label{eq:}
