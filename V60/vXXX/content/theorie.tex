@@ -7,19 +7,19 @@ Im Folgenden soll am Beispiel des Diodenlasers erläutert werden, wie eine solch
 wie er für die Spektroskopie der Hyperfeinstrukturaufspaltung von Rubidium genutzt werden kann.
 \subsection{Funktionsweise eines Lasers}
 Grundlegend besteht ein Laser aus drei Komponenten: einem aktiven Medium, einer Energiepumpe und einem Resonator.
-Die Energiepumpe pumpt Energie in das System, indem Elektronen im aktiven Medium angeregt werden (z.B. über eine Blitzlampe, Gasentladung,einem weiteren Laser oder wie in dem Fall über einen Strom von Ladungen).
+Die Energiepumpe pumpt Energie in das System, indem Elektronen im aktiven Medium angeregt werden (z.B. über eine Blitzlampe, Gasentladung, einen weiteren Laser oder wie in diesem Fall über einen Strom von Ladungen).
 Das Ziel der Energiepumpe ist es, eine Besetzungsinversion zu erzeugen. Das heißt, wie in Abbildung \ref{fig:inv} zu sehen, einen Zustand hoher Energie mit einer größeren Anzahl Elektronen zu besetzen 
 als die energetisch darunter liegenden Zustände.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.9]{pictures/Inv.png}
-    \caption{Besetzungsverteilung eines aktiven Mediums\cite{Demtröder}.}
+    \caption{Besetzungsverteilung eines aktiven Mediums \cite{Demtröder}.}
     \label{fig:inv}
 \end{figure}
-\noindent Die Elektronen regen sich durch verschiedene Emissionsprozesse unter Aussendung eines Photons fester Energie ab.
+\noindent Die Elektronen regen sich durch verschiedene Emissionsprozesse unter der Aussendung eines Photons fester Energie ab.
 Die Photonen werden dann im Resonator reflektiert und so wieder durch das aktive Medium hindurch geschickt,
-wo sie durch stimulierte Emission weitere Photonen erzeugen. Dadurch wird der Laser zu einem selbstschwingenden Oszillator.
-Diese Photonen sind dann kohärent. Ein Resonatorspiegel ist teildurchlässig, wodurch sich nach hochfahren des Lasers ein Maximum einstellt. Danach wird durch den teildurchlässigen
+wo sie durch stimulierte Emission weitere Photonen erzeugen. Dadurch wird der Laser zu einem selbst schwingenden Oszillator.
+Diese Photonen sind dann kohärent. Ein Resonatorspiegel ist teildurchlässig, wodurch sich nach dem Hochfahren des Lasers ein Maximum einstellt. Danach wird durch den teildurchlässigen
 Spiegel eine konstante Lichtintensität abgegeben. Je nach Resonatorkonfiguration speichert der Laser das Licht in festen Moden.
 \subsection{Emission und Absorption im Aktiven Medium}
 Zunächst sollten die wichtigsten Prozesse im aktiven Medium, anhand eines Zwei-Niveau-Systems diskutiert werden. 
@@ -28,7 +28,7 @@ Es ist grundsätzlich energetisch günstiger für das Elektron in einem tieferen
 Bewegt sich nun ein Photon mit genau der Energiedifferenz zweier Zustände eines Atoms auf dieses zu, kann es zu 2 Prozessen kommen.
 Wenn das Elektron im niedrigeren Zustand vorliegt, kann das Photon absorbiert werden (Absorption) und 
 das Elektron in den höheren Zustand übergehen. Liegt das Elektron im höheren Zustand vor, kann das Photon eine stimulierte Emission auslösen, bei der 
-das Elektron in den niedrigeren Zustand übergeht und ein weiteres kohärente Photon aussendet. Das Photon hat dann gleiche Wellenlänge, Polarisation und Ausbreitungsrichtung wie das ursprüngliche Photon.
+das Elektron in den niedrigeren Zustand übergeht und ein weiteres kohärentes Photon aussendet. Das Photon hat dann die gleiche Wellenlänge, Polarisation und Ausbreitungsrichtung wie das ursprüngliche Photon.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.9]{pictures/Prozesse.png}
@@ -59,7 +59,7 @@ da dieses bei $T=\qty{0}{\kelvin}$ vollständig besetzt ist. Das Band oberhalb d
 Elektronen in diesem Band frei beweglich sind. Bei Metallen liegt die Fermi-Energie im Leitungsband, weshalb diese bei $T=\qty{0}{\kelvin}$ leitfähig sind.
 Halbleiter haben eine analoge Bandstruktur zu Isolatoren, jedoch ist die Bandlücke kleiner. Sie beträgt bei Halbleitern bis zu $\qty{3}{\eV}$, bei Isolatoren 
 ist sie größer. Daher können in Halbleitern durch thermische Anregung, bei Raumtemperatur etwa $\qty{26}{\milli\eV}$, Elektronen in das Leitungsband gelangen. 
-Allerdings ist die Ladungsträgerdichte in Eigenleitung noch sehr gering. In diesem Versuch wird ein Aluminium-Gallium-Arsenid-Halbleiter(AlGaAs) verwendet. Dieser kann als "Light emitting Diode" (LED)
+Allerdings ist die Ladungsträgerdichte in Eigenleitung noch sehr gering. In diesem Versuch wird ein Aluminium-Gallium-Arsenid-Halbleiter (AlGaAs) verwendet. Dieser kann als "Light emitting Diode" (LED)
 durch Rekombination von Elektronen und Löchern Licht emittieren. Die Bandlücke liegt im infrarotem Wellenlängenbereich von $\qty{780}{\nano\meter}$.
 Entscheidend für die Funktionsweise eines Diodenlasers ist nun auch die Biegung der Bänder im p-n-Übergang. Bei angelegter Spannung können 
 Driftströme das E-Feld der Verarmungszone überwinden und Ladungen sammeln sich bereit zum Rekombinieren in der Verarmungszone.
@@ -78,15 +78,15 @@ Der grundlegende Aufbau des verwendeten Halbleiterchips, der für diesen Laser v
     \caption{Aufbau eines Halbleiterlasers \cite{teachspin}.}
     \label{fig:Chip}
 \end{figure}
-\noindent Grundlegend arbeitet der Laser wie eine LED, welche fortlaufend stimmuliert wird. Die Diode ist in FLießrichtung 
+\noindent Grundlegend arbeitet der Laser wie eine LED, welche fortlaufend stimmuliert wird. Die Diode ist in Fließrichtung 
 an eine äußere Spannung angeschlossen. Diese versorgt die Diode mit fortlaufend neuen Ladungen in der Sperrschicht 
 zwischen p- und n-dotiertem Halbleiter müssen die Ladungen das innere elektrische Feld der Diode überwinden und sammeln sich deswegen in der Region des Übergangs.
 Dies wird in Abbildung  \ref{fig:Chip} als aktive Schicht bezeichnet. Dort können Ladungen spontan mit Löchern unter Aussendung eines Photons rekombinieren.
 Dies ist das Prinzip jeder LED. Dieses Licht ist allerdings weder allzu intensiv noch kohärent. Außerdem ist die Wellenlänge auf Grund der ausgedehnten Bänder 
-noch nicht allzu Präzise. Die Oberflächen des Kristalls sind nun so beschichtet, dass Sie sehr reflektierend sind. Dadurch passiert das Licht die aktive Schicht viele 
-Male und induziert so durch stimmulierte Emission weitere Übergänge zwischen den Bändern. Das dabei entstehende Licht ist kohärent und bei genügend hohem Strom kann sich 
+noch nicht allzu präzise. Die Oberflächen des Kristalls sind nun so beschichtet, dass Sie sehr reflektierend sind. Dadurch passiert das Licht die aktive Schicht viele 
+Male und induziert so durch stimmulierte Emission weitere Übergänge zwischen den Bändern. Das dabei entstehende Licht ist kohärent und bei genügend hohem Strom können sich 
 innerhalb des Kristalls stehende Wellen mit festen Moden ausbilden. Dies wird innerer Resonator genannt.
-Der Übergang zwischen den Bändern ist stark Temperaturabhängig, weswegen die Wellenlänge mit dem höchsten Nettogewinn auch von der Temperatur abhängig ist.
+Der Übergang zwischen den Bändern ist stark temperaturabhängig, weswegen die Wellenlänge mit dem höchsten Nettogewinn auch von der Temperatur abhängig ist.
 Da durch den Halbleiter Strom fließt, kann auch durch die Stromstärke die Temperatur und somit die Wellenlänge eingestellt werden. 
 Die Stromstärkenabhängigkeit ist in Abbildung \ref{fig:Strom} dargestellt.
 \begin{figure}[H]
@@ -112,7 +112,7 @@ Die Konfiguration ist in Abbildung \ref{fig:Littrow} dargestellt. Der reflektier
 mit der Gitterkonstanten $d$, dem Beugungswinkel $\theta$, der Ordnung $m$ und der Wellenlänge $\lambda$ Beugungsmaxima aus. 
 Der Kristall ist nun so positioniert, dass das 1. Beugungsmaximum auf den Halbleiter zurückfällt.
 Der Anteil wird dann wieder im inneren Resonator verstärkt und irgendwann ausgekoppelt. Dadurch hat der Kristall 
-die Wirkung eines weiteren Resonatorspiegels mit der Länge $L$. Damit bildet der Halbleiter mit Kristall einen externen Resonator
+die Wirkung eines weiteren Resonatorspiegels mit der Länge $L$. Damit bildet der Halbleiter mit dem Kristall einen externen Resonator
 mit einer eigenen Modenstruktur. Auf Grund der größeren Länge liegen die einzelnen Moden gemäß 
 \begin{equation}
     \Delta \nu = \frac{c}{2L}
@@ -135,7 +135,7 @@ Diese sind in Abbildung \ref{fig:Moden} dargestellt.
 \noindent Nun kann über Veränderung des Kristallwinkels, des Stroms oder der Temperatur die Modenstruktur verschoben werden.
 Da praktisch die gesamte Energie in einer Mode gespeichert wird, bildet sich immer nur die Mode mit dem höchsten Nettogewinn aus. 
 Dies kann bei leichter Veränderung der Wellenlängenabhängigkeit, wie es beispielsweise in der Spektroskopie erwünscht ist, um einen schmalen 
-Wellenlängenbereich zu untersuchen, zu "Mode Hoping" führen wie es in Abbildung \ref{fig:Moden2} dargestellt ist.
+Wellenlängenbereich zu untersuchen, zu "Mode Hopping"  führen wie es in Abbildung \ref{fig:Moden2} dargestellt ist.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{pictures/Moden2.png}
@@ -155,11 +155,11 @@ bestimmt wird. Für Elektronen im Grundzustand von Rubidium, welches als Alkalim
 und bei einem Kernspin \(I=\frac{3}{2}\) die Werte \(F=1\) und \(F=2\). Ein Termschema für den ersten Fall ist in Abbildung \ref{fig:Feinstruktur} dargestellt.
 \begin{figure}
     \centering
-    \includegraphics[scale=1.1]{pictures/Term.png}
+    \includegraphics[width=\textwidth]{pictures/Term.png}
     \caption{Schematische Darstellung der Feinstruktur- und Hyperfeinstrukturaufspaltung}
     \label{fig:Feinstruktur}
 \end{figure}
 Im Rubidiumgas liegen nun 2 verschiedene Isotope vor, \(^{85}Rb\) und \(^{87}Rb\), die sich in ihrem Kernspin unterscheiden. Es gibt nun wie in 
-Abbildung \ref{fig:Feinstruktur} dargestellt 2 verschiedene Übergänge fpr jedes Isotop mit leicht verschobenen Wellenlängen. Es sollten also 4 Peaks, 2 Hohe und 2 niedrige, vorkommen.
+Abbildung \ref{fig:Feinstruktur} dargestellt 2 verschiedene Übergänge für jedes Isotop mit leicht verschobenen Wellenlängen. Es sollten also 4 Peaks, 2 Hohe und 2 niedrige, vorkommen.
 Die beiden hohen werden von \(^{85}Rb\) erzeugt, da diese Isotop mit 72\% gegenüber \(^{87}Rb\) häufiger vorkommt. 
 %\cite{}
