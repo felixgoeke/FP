@@ -83,3 +83,83 @@ Die Absoprtion $\beta$ ist gegeben durch
     \label{eq:beta}
 \end{equation}
 wobei $\mu$ der Absorptionskoeffizient ist.
+Für die Amplituden der einfallenden, reflektierten und transmittierten Welle gilt
+\begin{equation}
+    a_I + a_R = a_T 
+    \label{eq:amplituden}
+\end{equation}
+und
+\begin{equation}
+    a_I \vec{k}_I + a_R \vec{k}_R = a_T \vec{k}_T \, .
+\end{equation}
+Die Wellenzahl ist im Vakuum gegeben durch $k=|\vec{k}_I| = |\vec{k}_R |$ und im Medium durch $nk = |\vec{k}_T|$.
+Für die parallelen und senkrechten Komponenten bezogen auf die Oberfläche der Wellenvektoren gilt
+\begin{equation}
+    a_I k \cos(\alpha) + a_R k \cos(\alpha) = a_T nk \cos(\alpha') \label{eq:parallel}
+\end{equation}
+\begin{equation}
+    -(a_I-a_R) k \sin(\alpha) = - a_T nk \sin(\alpha') \, . \label{eq:senkrecht}
+\end{equation}
+Mit den Gleichungen \eqref{eq:amplituden} und \eqref{eq:senkrecht} folgt für kleine Winkel $\alpha$ und $\alpha'$
+\begin{equation}
+    \frac{a_I-a_R}{a_I+a_R} = n \frac{\sin(\alpha')}{\sin(\alpha)} \approx \frac{\alpha'}{\alpha} \, ,
+\end{equation}
+woraus sich die Fresnelkoeffizienten
+\begin{align}
+    r \equiv \frac{a_R}{a_I} &= \frac{\alpha - \alpha'}{\alpha + \alpha'} \, , \\
+    t \equiv \frac{a_T}{a_I} &= \frac{2\alpha}{\alpha + \alpha'} \, ,
+\end{align}
+ergeben.
+Die Intensität der reflektierten respektive transmittierten Welle ist durch das Betragtsquadrat der Amplitude $r,t$ gegeben.
+Der Winkel $\alpha'$, unter dem die transmittierte Welle auftritt, ist eine Komplexezahl und kann in Real- und Imaginärteil
+zerlegt werden.
+Dabei ist ersichtlich, dass die transmittierte Welle mit zunehmender Tiefe im Medium exponentiell abnimmt.
+Die Eindringtiefe ergibt sich somit zu 
+\begin{equation}
+    \Lambda = \frac{1}{2 k \Im \alpha'} \, \text{with} \, k= \frac{2\pi}{\lambda} \, .
+\end{equation}
+Bei einem kritischen Winkel $\alpha_c$ tritt Totalreflexion auf, sodass die transmittierte Welle verschwindet.
+Der kritischen Winkel ergibt sich durch die Bedingung $\alpha' =0$, einsetzen in das Snellius'sche Brechungsgesetz liefert:
+\begin{equation}
+   \cos \alpha_c = n \cos \alpha' \quad \Rightarrow \quad \cos \alpha_c = n = 1 - \delta \, .
+\end{equation}
+Entwicklung des Kosinus um kleine Winkel liefert
+\begin{equation}
+    \alpha_c \approx \sqrt{2 \delta} \, .
+    \label{eq:alpha_c}
+\end{equation}
+Für Einfallswinkel deutlich größer als $\alpha_c$ ist die Intensität der reflektierten Welle näherungsweise gegeben durch
+\begin{equation}
+    R = |r|^2 = \left(\frac{\alpha_c}{2 \alpha_I} \right)^4 \, .
+    \label{eq:reflektivität_R}
+\end{equation}
+Das bedeutet, dass die Intensität der reflektierten Welle mit steigendem Einfallswinkel stark abnimmt.
+% Seite 79 in Als-Nielsen
+
+\subsection{Multischichtsysteme} \label{sec:multischicht}
+Im Gegensatz zu den vorherigen Abschnitten wird nun ein Multischichtsystem betrachtet.
+Das Medium, in welches die Röntgenstrahlung eintritt hat folgich keine unendliche Ausdehnung mehr, 
+dies ist in Abbildung \ref{fig:multischicht} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Bilder/multischicht.png}
+    \caption{Röntgenstrahlung an einem Multischichtsystem \cite{als-nielsen2011}.}
+    \label{fig:multischicht}
+\end{figure}
+Im Gegensatz zum vorherigen Fall der unendlichen Ausdehnung, gibt es bei eindlicher Ausdehnung, 
+wie in Abbildung \ref{fig:multischicht} dargestellt, 
+eine unendliche Serie möglicher Reflexionen, wobei die ersten drei dargesteellt sind.
+In Abbildung \ref{fig:oszillation} sind die sogenannten Kiessig-Oszillationen dargestellt.
+Diese entstehen durch konstruktive und destruktive Interferenz der reflektierten Wellen an den Grenzflächen des Multischichtsystems als Konsequenz der winkelabhängigen Phasenverschiebung.
+Die Periode der Oszillationen is gegeben durch die Dicke $d$ der Schicht.
+\begin{equation}
+    d = \frac{\lambda}{2 \Delta \alpha_I} \, 
+    \label{eq:dicke}
+\end{equation}
+$\Delta \alpha_I$ bezeichnet dabei die Winkeldifferenz zweier Maxima.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Bilder/oszillation.png}
+    \caption{Kiessig-Oszillationen an einem Multischichtsystem \cite{als-nielsen2011}.}
+    \label{fig:oszillation}
+\end{figure}
