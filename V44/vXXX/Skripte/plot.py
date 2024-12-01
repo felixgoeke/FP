@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.ticker import ScalarFormatter
 import numpy as np
 from uncertainties import ufloat
 import uncertainties.unumpy as unp
@@ -6,14 +7,9 @@ import pandas as pd
 import scipy.constants as const
 import math
 
-# Diese Funktion liest Daten aus einer CSV-Datei ein und gibt sie als Numpy-Array zurück.
-def Data(Name):
-    # Daten aus der CSV-Datei lesen und als DataFrame speichern
-    Daten1 = pd.read_csv(Name, skiprows=0, sep=";")
-    # Kommas in den Daten durch Punkte ersetzen
-    Daten2 = Daten1.replace(",", ".", regex=True)
-    # DataFrame in ein Numpy-Array konvertieren und den Datentyp auf float64 festlegen
-    return Daten2.to_numpy(dtype=np.float64)
+def Data(Name,rows):
+    Daten1 = pd.read_csv(Name, skiprows=rows, sep="\s+", encoding = "ISO-8859-1",header=None)
+    return Daten1.to_numpy(dtype=np.float64)
 
 
 # Diese Funktion berechnet den größten Exponenten für jedes Element in einem 2D-Array.
@@ -160,6 +156,15 @@ def Plot1(x, y, xlabel="", ylabel="", filepath=""):
     plt.grid()
     plt.savefig(filepath)
     plt.clf()
+
+def Plot6(x, y, xlabel="", ylabel="",label=""):
+    fig, ax = plt.subplots()
+    ax.plot(x, y, "r.", markersize=8,markeredgewidth=0.5,markeredgecolor='black',label=label)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.yaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+    ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
+    return fig, ax
 
 # Funktion zum Erstellen eines Plots mit zwei Datensätzen
 def Plot2(x, y1, y2, xlabel="", ylabel="", filepath="", label1="", label2=""):
