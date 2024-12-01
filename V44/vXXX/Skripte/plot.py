@@ -166,6 +166,15 @@ def Plot6(x, y, xlabel="", ylabel="",label=""):
     ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
     return fig, ax
 
+def Plot7(x, y, xlabel="", ylabel="",label=""):
+    fig, ax = plt.subplots()
+    ax.plot(x, y, "r-", linewidth=2,label=label,alpha=0.8)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.set_xlim(0,1.25)
+    ax.yaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+    ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
+    return fig, ax
 # Funktion zum Erstellen eines Plots mit zwei Datensätzen
 def Plot2(x, y1, y2, xlabel="", ylabel="", filepath="", label1="", label2=""):
     fig, ax = plt.subplots()

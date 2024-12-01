@@ -52,9 +52,10 @@ def Xscanf(xscan):
     HM=(max(xscan[:,1])+min(xscan[:,1]))/2
     XL=(HM-intercept1)/slope1
     XR=(HM-intercept2)/slope2
-    print("Probenbreite=",XR-XL)
+    D=XR-XL
+    print("Probenbreite=",D)
     x3=np.linspace(XL,XR,1000)
-    fig, ax = plot.Plot6(xscan[:,0], xscan[:,1], r"$x$/mm", r"Intensität $I[1/s]$","X-Scan")
+    fig, ax = plot.Plot6(xscan[:,0], xscan[:,1], r"$x$/mm", r"Intensität $I[1/s]$","Messpunkte")
     ax.plot(x1,y1, color='k', linestyle='--', label="Linker Probenrand")
     ax.plot(x2,y2, color='k', linestyle='--', label="Rechter Probenrand")
     ax.plot(x3,HM*np.ones(1000), color='y', linestyle='--', label="Probenbreite= {:.2f} mm".format(XR-XL))
@@ -63,4 +64,38 @@ def Xscanf(xscan):
     plt.legend(loc="upper center")
     plt.savefig("/mnt/c/Users/mas19/OneDrive/Uni/1.Semester/FP-Master/Protokolle/FP/V44/vXXX/plots/Xscan.pdf")
     plt.clf()
-Xscanf(xscan)
+#Xscanf(xscan)
+D=22.44e-3
+print("Probenbreite=",D *1e3)
+d=Zscan[29,0]-Zscan[21,0]
+print("Strahlbreite=",d)
+alpha1=np.arcsin(d*1e-3/D)*180/np.pi
+def Zscanf(Zscan,d):
+    fig, ax = plot.Plot6(Zscan[:,0], Zscan[:,1], r"$z$/mm", r"Intensität $I[1/s]$","Messpunkte")
+    ax.axvline(x=Zscan[21,0], color='k', linestyle='--', label="Linke Strahlgrenze")
+    ax.axvline(x=Zscan[29,0], color='k', linestyle='--', label="Rechte Strahlgrenze")
+    x=np.linspace(Zscan[21,0],Zscan[29,0],1000)
+    ax.plot(x,2e5*np.ones(1000), color='y', linestyle='--', label="Strahlbreite= {:.2f} mm".format(d))
+    plt.grid()
+    plt.legend(loc="lower left")
+    plt.savefig("/mnt/c/Users/mas19/OneDrive/Uni/1.Semester/FP-Master/Protokolle/FP/V44/vXXX/plots/Zscan.pdf")
+    plt.clf()
+#Zscanf(Zscan,d)
+alpha=(Rocking[-5,0]-Rocking[4,0])/2
+print("Geometriewinkel Scan=",alpha1)
+print("Geometriewinkel Rocking=",alpha)
+print("Geometriewinkel Theorie=",np.arcsin(d/20)*180/np.pi)
+def Rockingf(Rocking,alpha):
+    fig,ax =plot.Plot6(Rocking[:,0], Rocking[:,1], r"$\Theta$/°", r"Intensität $I[1/s]$","Messpunkte")
+    ax.axvline(x=Rocking[4,0], color='k', linestyle='--', label="Geometriewinkel")
+    ax.axvline(x=Rocking[-5,0], color='k', linestyle='--')
+    
+    x=np.linspace(Rocking[4,0],Rocking[-5,0],1000)
+    ax.plot(x,0*np.ones(1000), color='y', linestyle='--', label="Geometriewinkel= {:.2f}°".format(alpha))
+    plt.grid()
+    plt.legend(loc="upper left")
+    plt.savefig("/mnt/c/Users/mas19/OneDrive/Uni/1.Semester/FP-Master/Protokolle/FP/V44/vXXX/plots/Rocking.pdf")
+    plt.clf()
+
+#Rockingf(Rocking,alpha)
+print(f"Maximale Intensität={max(Detector[:,1])*1e-5:.4f}e5")
