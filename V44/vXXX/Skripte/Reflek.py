@@ -58,13 +58,13 @@ def PlotKorr(RefwoD,KRefwoD,RFresenel,peaks):
     plt.clf()
 #PlotKorr(RefwoD,KRefwoD,RFresenel,peaks)
 
-DeltaSi=8e-6
-DeltaPol=4e-6
-sigmaSi=21e-10
-sigmaPol=20e-10
-beta1=5.5e-7
-beta2=5e-9
-z2=7e-8
+DeltaSi=7.1e-6
+DeltaPol=3.5e-6
+sigmaSi=11e-10
+sigmaPol=15e-10
+beta1=6e-7
+beta2=0.1e-6
+z2=8.1e-8
 print("DeltaSi=",DeltaSi,"DeltaPol=",DeltaPol,"sigmaSi=",sigmaSi,"sigmaPol=",sigmaPol,"beta1=",beta1,"beta2=",beta2,"z2=",z2)
 def ParattRau(DeltaSi,DeltaPol,sigmaSi,sigmaPol,beta1,beta2,z2,a_i):
     a_i=a_i*np.pi/180
