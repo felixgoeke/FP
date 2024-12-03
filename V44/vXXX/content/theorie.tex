@@ -110,6 +110,10 @@ woraus sich die Fresnelkoeffizienten
     t \equiv \frac{a_T}{a_I} &= \frac{2\alpha}{\alpha + \alpha'} \, ,
 \end{align}
 ergeben.
+Für kleine Winkel $\alpha$ und $\alpha'$ und $n\approx1$ kann der Kosinus um Null entwickelt werden, sodass
+\begin{equation}
+    \alpha' \approx \sqrt{\alpha^2-2\delta} 
+\end{equation}
 Die Intensität der reflektierten respektive transmittierten Welle ist durch das Betragtsquadrat der Amplitude $r,t$ gegeben.
 Der Winkel $\alpha'$, unter dem die transmittierte Welle auftritt, ist eine Komplexezahl und kann in Real- und Imaginärteil
 zerlegt werden.
@@ -163,3 +167,65 @@ $\Delta \alpha_I$ bezeichnet dabei die Winkeldifferenz zweier Maxima.
     \caption{Kiessig-Oszillationen an einem Multischichtsystem \cite{als-nielsen2011}.}
     \label{fig:oszillation}
 \end{figure}
+
+% Parratt Algorithmus
+\subsubsection{Parratt-Algorithmus} \label{sec:parratt}
+Der Parratt-Algorithmus ist ein numerisches Verfahren, um die Reflektivität von Röntgenstrahlung an Multischichtsystemen zu berechnen.
+Betrachtet wird ein Medium, bestehend aus $N$ Schichten, wobei die $N$/te Schicht direkt auf dem Substrat liegt.
+Das Substrat wird als unendlich dick angesehen.
+Jede Schicht des Mediums hat den Brechungsindex $n_j=1-\delta_j+i\beta_j$ mit der Dicke $d_j$.
+Das Verhältnis der reflektierten Amplitude $R_{j+1}$ und der transmittierten Amplitude $T_{j+1}$ ist durch $X_{j+1}$ gegeben.
+Dadruch lässt sich das Verhältnis der nächsten Schicht mit
+\begin{equation}
+    X_{j} = \frac{R_j}{T_j} = \exp{(-2i k_{z,j} z_j)} \frac{r_{j,j+1} + X_{j+1} \exp{(2i k_{z,j+1} z_j)}}{1+r_{j,j+1}X_{j+1} \exp{(2i k_{z,j+1} z_j)}}
+\end{equation}
+bestimmen. Dabei ist $z_j$ die Position der j-ten Schicht und $r_{j,j+1}$ der Fresnelkoeffizient der j-ten Grenzfläche.
+Eine schematische Darstellung ist in Abbildung \ref{fig:parratt} zu sehen. 
+Es gelten die Randbedingungen $T_1=1$ und $R_{N+1}=0$ und folglich $X_{N+1}=0$ als Start der Rekursion.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Bilder/parratt.png}
+    \caption{Schematische Darstellung eines Mehrschichtsystems mit $N+1$ Schichten und $N$ Grenzflächen \cite{m-tolan2013}.}
+    \label{fig:parratt}
+\end{figure}
+Die z-Komponente des Wellenvektors in der j-ten Schicht ist gegeben durch
+\begin{equation}
+    k_{z,j} = k \sqrt{n_j^2 - \cos^2\alpha_i} \, ,
+\end{equation}
+wobei $\alpha_i$ der Einfallswinkel ist.
+Für nicht ideal glatte Grenzflächen wird die "root-mean-square" Rauigkeit $\sigma_j$ eingeführt.
+Es gilt
+\begin{equation}
+   \sigma_j^2 = \int (z-z_j)^2 P_j(z) \, \text{d}z \, ,
+\end{equation}
+wobei $P_j(z)$ die Wahrscheinlichkeitsdichte mit dem Erwartungswert $z_j = \int z P_j(z)\text{d}z$ ist.
+Die modifizierten Fresnelkoeffizienten sind gegeben durch
+\begin{equation}
+    \tilde{r}_{j,j+1} = r_{j,j+1} \exp{(-2 k_{z,j} k_{z,j+1} \sigma_j^2)} \, , \qquad \tilde{t}_{j,j+1} = t_{j,j+1} \exp{((k_{z,j} - k_{z,j+1})^2 \sigma_j^2)/2} \, .
+\end{equation}
+gegeben. Diese können in den Parratt-Algorithmus eingesetzt werden, um die Reflektivität zu berechnen.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{Bilder/sigma.png}
+    \caption{Rauigkeit einer Grenzfläche mit der mittleren z-Koordinate $z_j$ und Fluktuation $z(x,y)$. \cite{m-tolan2013}.}
+    \label{fig:rauigkeit}
+\end{figure}
+
+
+% Rauigkeit
+\subsection{Geometriefaktor} \label{sec:Geometriefaktor}
+Unterhalb des Geometriewinkels $\alpha_g$ trifft nicht die gesamte Breite des Strahls die Probe.
+Dies wird durch den Geometriefaktor $G$ berücksichtigt.
+Der Geometriefaktor ist gegeben durch
+\begin{equation}
+    G = \begin{cases}
+        \frac{D \sin(\alpha)}{d} & \text{für} \, \alpha < \alpha_g \\
+        1 & \text{für} \, \alpha \geq \alpha_g
+    \end{cases} \, ,
+\end{equation}
+wobei $D$ die Breite der Probe und $d$ die Strahlbreite ist.
+Der Geometriewinkel $\alpha_g$ ist gegeben durch
+\begin{equation}
+    \alpha_g = \arcsin \left( \frac{d}{D} \right) \, .
+\end{equation}
