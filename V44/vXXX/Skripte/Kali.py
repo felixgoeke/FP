@@ -25,9 +25,11 @@ def Detectorf(Detector):
 
 
     A_fit, mu_fit, sigma_fit, b_fit = popt
+    A_Delta, mu_Delta, sigma_Delta, b_Delta = np.sqrt(np.diag(pcov))
     x=np.linspace(-0.5,0.5,1000)
-    print("A=",A_fit,"mu=",mu_fit,"sigma=",sigma_fit,"b=",b_fit)
+    print("A=",A_fit,"+/-",A_Delta, "mu=",mu_fit,"+/-",mu_Delta, "sigma=",sigma_fit,"+/-",sigma_Delta, "b=",b_fit,"+/-",b_Delta)
     FWHM = 2 * np.sqrt(2 * np.log(2)) * sigma_fit
+    print("FWHM=",FWHM,"+/-",2 * np.sqrt(2 * np.log(2)) * sigma_Delta)
     x1=np.linspace(mu_fit-FWHM/2,mu_fit+FWHM/2,1000)
 
     fig,ax=plot.Plot6(Detector[:,0], Detector[:,1], r"$\Theta$ / °", r"Intensität $I[1/s]$","Messdaten")
@@ -47,6 +49,8 @@ def Xscanf(xscan):
     y1=slope1*x1+intercept1
     coef2=np.polyfit(xscan[-12:-9,0],xscan[-12:-9,1],1)
     slope2, intercept2 = coef2
+    print("Steigung1=",slope1,"Steigung2=",slope2)
+    print("Abschnitt1=",intercept1,"Abschnitt2=",intercept2)
     x2=np.linspace(xscan[-12,0]-1,xscan[-9,0]+1,1000)
     y2=slope2*x2+intercept2
     HM=(max(xscan[:,1])+min(xscan[:,1]))/2
