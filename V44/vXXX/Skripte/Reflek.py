@@ -9,7 +9,7 @@ from scipy.signal import find_peaks
 import math
 import plot
 
-alpha=0.4584
+alpha=0.54
 D=20e-3
 d0=0.16e-3
 Imax=3.664e5
@@ -39,10 +39,13 @@ t=np.sqrt(Reflekt[1:,0]**2-alphaSi**2)
 r=(Reflekt[1:,0]-t)/(Reflekt[1:,0]+t)
 RFresenel=np.where(Reflekt[1:,0]>alphaSi,r**2,1)
 peaks, properties = find_peaks(-np.log(KRefwoD[:350,1]), height=(1,10.4), distance=6,prominence=2e-5)
-Deltaalpha=np.mean(np.diff(KRefwoD[peaks,0]))
-print("Deltaalpha=",Deltaalpha)
+Diff=np.diff(KRefwoD[peaks,0])
+Deltaalpha=np.mean(Diff)
+DeltaDeltaalpha=np.std(Diff,ddof=1)
+print("Deltaalpha=",Deltaalpha,"DeltaDeltaalpha=",DeltaDeltaalpha)
 Schichtdicke=180*Lambda/(2*Deltaalpha*np.pi)
-print("Schichtdicke=",Schichtdicke)
+DeltaSchichtdicke=Schichtdicke*DeltaDeltaalpha/Deltaalpha
+print("Schichtdicke=",Schichtdicke,"DeltaSchichtdicke=",DeltaSchichtdicke)
 
 def PlotKorr(RefwoD,KRefwoD,RFresenel,peaks):
     fig, ax = plot.Plot7(RefwoD[:,0], RefwoD[:,1], r"$\Theta$ / °", r"Reflektivität R","Reflektivität ohne Diffuse Streuung")
@@ -56,14 +59,14 @@ def PlotKorr(RefwoD,KRefwoD,RFresenel,peaks):
     plt.legend(loc="upper right")
     plt.savefig("/mnt/c/Users/mas19/OneDrive/Uni/1.Semester/FP-Master/Protokolle/FP/V44/vXXX/plots/KorrigierteReflektionsmessung.pdf")
     plt.clf()
-#PlotKorr(RefwoD,KRefwoD,RFresenel,peaks)
+PlotKorr(RefwoD,KRefwoD,RFresenel,peaks)
 
 DeltaSi=7.1e-6
 DeltaPol=3.5e-6
 sigmaSi=11e-10
 sigmaPol=15e-10
 beta1=6e-7
-beta2=0.1e-6
+beta2=0.1e-7
 z2=8.1e-8
 print("DeltaSi=",DeltaSi,"DeltaPol=",DeltaPol,"sigmaSi=",sigmaSi,"sigmaPol=",sigmaPol,"beta1=",beta1,"beta2=",beta2,"z2=",z2)
 def ParattRau(DeltaSi,DeltaPol,sigmaSi,sigmaPol,beta1,beta2,z2,a_i):

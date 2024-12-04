@@ -106,12 +106,12 @@ Mit den Gleichungen \eqref{eq:amplituden} und \eqref{eq:senkrecht} folgt für kl
 \end{equation}
 woraus sich die Fresnelkoeffizienten
 \begin{align}
-    r \equiv \frac{a_R}{a_I} &= \frac{\alpha - \alpha'}{\alpha + \alpha'} \, , \\
+    r \equiv \frac{a_R}{a_I} &= \frac{\alpha - \alpha'}{\alpha + \alpha'} \, ,\label{eq:fresnel} \\
     t \equiv \frac{a_T}{a_I} &= \frac{2\alpha}{\alpha + \alpha'} \, ,
 \end{align}
 ergeben.
 Für kleine Winkel $\alpha$ und $\alpha'$ und $n\approx1$ kann der Kosinus um Null entwickelt werden, sodass
-\begin{equation}
+\begin{equation}\label{eq:alpha}
     \alpha' \approx \sqrt{\alpha^2-2\delta} 
 \end{equation}
 Die Intensität der reflektierten respektive transmittierten Welle ist durch das Betragtsquadrat der Amplitude $r,t$ gegeben.
@@ -218,7 +218,7 @@ gegeben. Diese können in den Parratt-Algorithmus eingesetzt werden, um die Refl
 Unterhalb des Geometriewinkels $\alpha_g$ trifft nicht die gesamte Breite des Strahls die Probe.
 Dies wird durch den Geometriefaktor $G$ berücksichtigt.
 Der Geometriefaktor ist gegeben durch
-\begin{equation}
+\begin{equation}\label{eq:geometriefaktor}
     G = \begin{cases}
         \frac{D \sin(\alpha)}{d} & \text{für} \, \alpha < \alpha_g \\
         1 & \text{für} \, \alpha \geq \alpha_g
@@ -226,6 +226,6 @@ Der Geometriefaktor ist gegeben durch
 \end{equation}
 wobei $D$ die Breite der Probe und $d$ die Strahlbreite ist.
 Der Geometriewinkel $\alpha_g$ ist gegeben durch
-\begin{equation}
+\begin{equation}\label{eq:geometriewinkel}
     \alpha_g = \arcsin \left( \frac{d}{D} \right) \, .
 \end{equation}

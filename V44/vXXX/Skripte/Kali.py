@@ -86,8 +86,9 @@ def Zscanf(Zscan,d):
     plt.clf()
 #Zscanf(Zscan,d)
 alpha=(Rocking[-5,0]-Rocking[4,0])/2
+dalpha=np.sqrt(((Rocking[-5,0]-alpha)**2+(Rocking[4,0]+alpha)**2)/2)
 print("Geometriewinkel Scan=",alpha1)
-print("Geometriewinkel Rocking=",alpha)
+print("Geometriewinkel Rocking=",alpha,f"+/-{dalpha:.6f}")
 print("Geometriewinkel Theorie=",np.arcsin(d/20)*180/np.pi)
 def Rockingf(Rocking,alpha):
     fig,ax =plot.Plot6(Rocking[:,0], Rocking[:,1], r"$\Theta$/°", r"Intensität $I[1/s]$","Messpunkte")
