@@ -1,2 +1,36 @@
 \section{Diskussion}
   \label{sec:Diskussion}
+Abweichungen werden im Folgenden normiert auf den jeweiligen Theoriewert angegeben.
+Zunächst konnte aus den Justageplots Informationen über die Probenbreite $D=\SI{22.44}{\milli\meter}$ und den Strahldurchmesser $d=\SI{0.16}{\milli\meter}$ gewonnen werden.
+Die Probengröße weicht um $\SI{10.8}{\percent}$ von den Theoriewerten ab. Dies lässt sich aber damit erklären, dass der X-Scan keinen scharfen Abfall der Ränder aufweist und so die 
+Postion der Ränder nicht exakt bestimmt werden kann. Aus den beiden Scans und der Rockingkurve sowie mit der theoretischen Probenbreite konnten 3 verschiedenen 
+Werte für den Geometriewinkel bestimmt werden.
+\begin{alignat}{3}
+  \alpha_\text{g, Rocking} &= \SI{0.54(0)}{\degree} \quad & \alpha_\text{g, X,Z-Scan} &= \SI{0.41}{\degree} \quad & \alpha_\text{g, Theorie} &= \SI{0.46}{\degree} \\
+\end{alignat}
+Der Mittelwert ergibt sich dann zu $\alpha_\text{g} = \SI{0.47}{\degree}$ mit einer Abweichung des Mittelwerts von $\SI{0.04}{\degree}$.
+
+Die aus dem Parratt-Algorithmus bestimmten Werte für die Rauigkeit und den Brechungsindex werden in Tabelle \ref{tab:Ergebnisse} mit den Theoriewerten verglichen.
+Dabei konnten besonders für die Dispersion $\delta$ besonders gute Werte erzielt werden. Die Rauigkeit hat definitiv die richtige Größenordnung und die Schichtdicke weicht auch nicht allzu stark
+von dem Wert, der aus den Abständen der Minima berechnet wurde, ab. Die Werte für die Absorptionskoeffizienten $\beta_1$ und $\beta_2$ weichen jedoch stark von den Theoriewerten ab.
+Dies liegt zum Teil daran, dass $\beta_2$ sehr klein ist und daher kaum Einfluss auf die Reflektivität hat. Die Abweichung von $\beta_1$ könnte ein Produkt von mehreren ungenau eingestellten Parametern sein.
+Der Fit passt zwar über die lange Distanz sehr gut, aber vor allem im Bereich des kritischen Winkels ist er noch nicht optimal. Eine deutlich zu große gemessene Absorption könnte 
+auch darauf hindeuten, dass das Substrat einiges zusätzlich an Licht absorbiert, was zu einer effektiven Zunahme der einzelnen Absorptionskoeffizienten führt.
+\begin{table}
+    \centering
+    \caption{Vergleich der Ergebnisse des Parrat Plots mit der Theorie.}
+    \label{tab:Ergebnisse}
+    \begin{tabular}{c c c c}
+        \toprule
+        Parameter & Parratt Algorithmus & Theoriewert \cite{m-tolan2013} & Abweichung\\
+        \midrule
+        $\delta_{\text{Si}}$ & \SI{7.1e-6}{} & \SI{7.6e-6}{} & \SI{6.6}{\percent} \\
+        $\delta_{\text{Pol}}$ & \SI{3.5e-6}{} & \SI{3.5e-6}{} & \SI{0.0}{\percent} \\
+        $\sigma_{\text{Si}}$ & \SI{11e-10}{\meter} & ~$\SI{10}{\angstrom}$ &  \\
+        $\sigma_{\text{Pol}}$ & \SI{15e-10}{\meter} & ~$\SI{10}{\angstrom}$ &  \\
+        $\beta_1$ & \SI{6e-7}{} & \SI{1.9e-7}{} & \SI{68.3}{\percent} \\
+        $\beta_2$ & \SI{1e-8}{} & \SI{1.75e-8}{} & \SI{75}{\percent} \\
+        $d$ & \SI{8.1e-8}{\meter} & \SI{8.9e-8}{\meter} & \SI{9.0}{\percent} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
