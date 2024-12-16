@@ -50,7 +50,7 @@ Die Bandstruktur dieser Festkörper ist in Abbildung \ref{fig:Band} dargestellt.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{pictures/Bänder.png}
-    \caption{Bandstruktur von Metallen, Halbleitern und Isolatoren \cite{demtröder}.}
+    \caption{Bandstruktur von Metallen, Halbleitern und Isolatoren \cite{Demtröder}.}
     \label{fig:Band}
 \end{figure}
 \noindent Dabei bezeichnet $E_\text{F}$ die Fermi-Energie, welche angibt bis zu welcher Energie bei $T=\qty{0}{\kelvin}$ die Zustände besetzt sind.
@@ -97,22 +97,29 @@ Die Stromstärkenabhängigkeit ist in Abbildung \ref{fig:Strom} dargestellt.
 \end{figure}
 
 \subsection{Littrow-Konfiguration}
-Die Littrow-Konfiguration ist eine spezielle Konfiguration eines Lasers, bei der ein Kristall als Resonatorspiegel dient.
-Die Konfiguration ist in Abbildung \ref{fig:Littrow} dargestellt. Der reflektierte Anteil wird ausgekoppelt und kann für optische Experimente genutzt werden.
+Die Littrow-Konfiguration ist eine spezielle Anordnung \ref{fig:Littrow}, bei der ein Beugungsgitter in einem bestimmten Winkel, 
+dem Littrow-Winkel, so positioniert wird, dass die erste Beugungsordnung des Lichts zurück in die Lichtquelle, wie etwa einen Halbleiterlaser, 
+reflektiert wird. 
+Dieser Aufbau wird zur Wellenlängenselektion verwendet, da nur die Lichtwellenlänge, die der Gitterbeugungsbedingung im Littrow-Winkel entspricht, 
+effizient zurückgeführt und verstärkt wird.
+Ein Teil des einfallenden Lichts wird in die nullte Beugungsordnung reflektiert, was aus der reinen Reflexion an der Oberfläche des Kristalls resultiert.  Dieser Anteil des Lichts (etwa 80 \%) wird aus dem Resonator ausgekoppelt 
+und steht für optische Experimente zur Verfügung. Im Gegensatz dazu fällt die erste Beugungsordnung des Lichts wieder auf das aktive Medium zurück, 
+wo es weiter verstärkt wird.
+Durch diese Rückkopplung fungiert das Beugungsgitter als selektives Element für die Wellenlänge und ermöglicht die Kontrolle der spektralen Eigenschaften des Lasers. 
+Der Halbleiterlaser und das Gitter bilden gemeinsam einen externen Resonator mit einer spezifischen Modenstruktur und einer effektiven Resonatorlänge $L$, die durch die Position des Gitters bestimmt wird.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{pictures/Littrow.png}
     \caption{Littrow-Konfiguration eines Lasers \cite{teachspin}.}
     \label{fig:Littrow}
 \end{figure}
-\noindent Zusätzlich bilden sich jedoch gemäß der Bragg-Bedingung
+\noindent Der Littrow-Winkel muss nun gemäß der Bragg-Bedingung eingestellt werden
 \begin{equation}
     2d\sin(\theta)=m\lambda
 \end{equation}
 mit der Gitterkonstanten $d$, dem Beugungswinkel $\theta$, der Ordnung $m$ und der Wellenlänge $\lambda$ Beugungsmaxima aus. 
-Der Kristall ist nun so positioniert, dass das 1. Beugungsmaximum auf den Halbleiter zurückfällt.
-Der Anteil wird dann wieder im inneren Resonator verstärkt und irgendwann ausgekoppelt. Dadurch hat der Kristall 
-die Wirkung eines weiteren Resonatorspiegels mit der Länge $L$. Damit bildet der Halbleiter mit dem Kristall einen externen Resonator
+Dadurch bildet der Kristall mit dem aktiven Medium einen weiteren Resonator mit der Länge $L$. 
+Damit bildet der Halbleiter mit dem Kristall einen externen Resonator
 mit einer eigenen Modenstruktur. Auf Grund der größeren Länge liegen die einzelnen Moden gemäß 
 \begin{equation}
     \Delta \nu = \frac{c}{2L}
