@@ -66,9 +66,11 @@ DeltaPol=3.5e-6
 sigmaSi=11e-10
 sigmaPol=15e-10
 beta1=6e-7
-beta2=0.1e-7
+beta2=1e-8
 z2=8.1e-8
-print("DeltaSi=",DeltaSi,"DeltaPol=",DeltaPol,"sigmaSi=",sigmaSi,"sigmaPol=",sigmaPol,"beta1=",beta1,"beta2=",beta2,"z2=",z2)
+alphaSi1=np.sqrt(DeltaSi)
+alphaPol1=np.sqrt(DeltaPol)
+print("DeltaSi=",DeltaSi,"DeltaPol=",DeltaPol,"sigmaSi=",sigmaSi,"sigmaPol=",sigmaPol,"beta1=",beta1,"beta2=",beta2,"z2=",z2, "alpha,Si=",alphaSi1,"alpha,Pol=",alphaPol1)
 def ParattRau(DeltaSi,DeltaPol,sigmaSi,sigmaPol,beta1,beta2,z2,a_i):
     a_i=a_i*np.pi/180
     f1=np.sin(a_i)

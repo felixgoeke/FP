@@ -1,7 +1,7 @@
 \section{Auswertung}
 \label{sec:Auswertung}
 \subsection{Bestimmung der Halbwertsbreite und Intensität}
-DIe Intensitätsverteilung des Röntgenstrahls kann durch eine Gaußfunktion der Form
+Die Intensitätsverteilung des Röntgenstrahls kann durch eine Gaußfunktion der Form
 \begin{equation}
     I(\theta)=\frac{I_0}{\sqrt{2\cdot \pi \cdot \sigma^2}} \cdot \exp\left(-\frac{(\theta-\mu)^2}{2\cdot \sigma^2}\right)+b
 \end{equation}
@@ -35,7 +35,7 @@ Daraus ergibt sich ein Strahldurchmesser von $d=\SI{0.16}{\milli\meter}$.
     \caption{Z-Scan zur Bestimmung der Strahlbreite}
     \label{fig:Zscan}
 \end{figure}
-In Abbildung \ref{fig:Xscan} ist der X-Scan dargestellt. An dem Ort an dem sich die Probe befindet fällt die Intensität ab. Daher kann aus der Breite des Abfalls ide Probenbreite 
+In Abbildung \ref{fig:Xscan} ist der X-Scan dargestellt. An dem Ort an dem sich die Probe befindet fällt die Intensität ab. Daher kann aus der Breite des Abfalls die Probenbreite 
 bestimmt werden. Dafür sind jeweils drei Messpunkte des Randes für eine lineare Ausgleichsgerade $y=a\cdot x+b$ genommen worden. Die Probenbreite wurde bei der halben Intensität gemessen.
 Durch Umstellen der Gleichung für die Ausgleichsgerade ergibt sich dann die Position der Ränder. 
 Die Parameter der linearen Ausgleichsgerade für die Ränder, welcher mit der Numpy-Funktion Polyfit erstellt worden ist, betragen
@@ -98,7 +98,7 @@ Damit ergibt sich die Schichtdicke zu
 \end{figure}
 Eine weitere Möglichkeit Informationen über Probe zu erhalten ist durch die Anwendung des Paratt-Algorhitmus. Dabei können 7 Parameter von außen vorgegeben werden. 
 Die Dispersion $\delta$, die Absorptionskoeffizienten $\beta$ die Rauigkeit $\sigma$ der beiden Grenzflächen, sowie die Dicke $d$ der oberen Schicht.
-Diese Parameter können so variiert werden, dass die Reflektivität der Probe möglichst gut angenähert wird. Das Ergebnis dieser Variation ist ist in Abbildung 
+Diese Parameter können so variiert werden, dass die Reflektivität der Probe möglichst gut angenähert wird. Das Ergebnis dieser Variation ist in Abbildung 
 \ref{fig:Parattplot} dargestellt. Die Parameter betragen
 \begin{align*}
     \delta_{\text{Si}} &= \SI{7.1e-6}{} \\
@@ -107,8 +107,11 @@ Diese Parameter können so variiert werden, dass die Reflektivität der Probe m�
     \sigma_{\text{Pol}} &= \SI{15e-10}{\meter} \\
     \beta_1 &= \SI{6e-7}{} \\
     \beta_2 &= \SI{1e-8}{} \\
-    d &= \SI{8.1e-8}{\meter}.
+    d &= \SI{8.1e-8}{\meter}\\
+    \alpha_{\text{c,Si}}&=\SI{0.1524}{\degree} \\
+    \alpha_{\text{c,Pol}}&=\SI{0.107}{\degree} ,\\
 \end{align*}
+wobei $\alpha_{\text{c,Si}}$ und $\alpha_{\text{c,Pol}}$ die kritischen Winkel der beiden Schichten sind und aus  $\delta$ berechnet werden können.
 Eine Variation der Schichtdicke $d$ variiert die Wellenlänge der Kiessing Oszillationen. Die Variation der Dispersion $\delta$ variiert den kritischen Winkel
 und damit wo die Reflektivität abfällt. Damit lässt sich die Kurve als ganzes gut verschieben. Die Absorption $\beta$ variiert die Höhe der Oszillationen und auch etwas den Abfall der Reflektivität bei 
 zunehmenden Winkel. Die Rauigkeit $\sigma$ variiert wie die Kurve geformt ist und wie sich die Höhe der Intensitätsmaxima logaritmisch verändern.
