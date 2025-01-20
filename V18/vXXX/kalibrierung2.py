@@ -17,12 +17,12 @@ matplotlib.rcParams.update({"font.size": 18})
 SKIP_ANFANG = 12
 SKIP_ENDE = 14
 
-europium = pd.read_csv("./data/Europium.Spe", skiprows=SKIP_ANFANG, header=None)
+europium = pd.read_csv("../data/Europium.Spe", skiprows=SKIP_ANFANG, header=None)
 europium = europium.iloc[:-SKIP_ENDE]  # Entferne den Rotz am Ende
 europium.columns = ["Daten"]
 
 # Einlesen der Untergrundmessung
-untergrund = pd.read_csv("./data/Untergrund.Spe", skiprows=SKIP_ANFANG, header=None)
+untergrund = pd.read_csv("../data/Untergrund.Spe", skiprows=SKIP_ANFANG, header=None)
 untergrund.columns = ["daten"]
 untergrund = untergrund.iloc[:-SKIP_ENDE]
 
@@ -36,7 +36,7 @@ untergrund["index"] = untergrund.index
 
 # Einlesen der Literaturwerte
 europium_lit = pd.read_csv(
-    "./data/Europium_Lit.csv",
+    "../data/Europium_Lit.csv",
     sep=";",
     skiprows=13,
     header=None,
@@ -48,62 +48,131 @@ europium_lit["Unsicherheit(E)"] = pd.to_numeric(europium_lit["Unsicherheit(E)"],
 europium_lit["Intensität"] = pd.to_numeric(europium_lit["Intensität"], errors="coerce")
 europium_lit["Unsicherheit(I)"] = pd.to_numeric(europium_lit["Unsicherheit(I)"], errors="coerce")
 
+europium_lit=europium_lit[europium_lit["Energie"]<800]
+
+
 #normierung des untergrundes
 #untergrundmessung dauerte 78545s, europiummessung 3718s
-untergrund["daten"] = untergrund["daten"] * (3718 / 78545)
+#untergrund["daten"] = untergrund["daten"] * (3718 / 78545)
+Sum=europium["data"].sum()
+untergrund["daten"] = untergrund["daten"] * (3718 / 78545) /Sum
+europium["data"] = europium["data"] / Sum
+
+# Daten nach Index 8000 abschneiden
+europium = europium.iloc[:8000]
+untergrund = untergrund.iloc[:8000]
+
+#Funktion zum Zusammenfassen der Bins
+def rebin(data, bin_size):
+    n_bins = len(data) // bin_size
+    rebinned_data = np.zeros(n_bins)
+    rebinned_index = np.zeros(n_bins)
+    for i in range(n_bins):
+        start = i * bin_size
+        end = start + bin_size
+        rebinned_data[i] = data[start:end].sum()
+        rebinned_index[i] = (start + end - 1) // 2
+    return rebinned_index, rebinned_data
+
+# Zusammenfassen der Bins
+bin_size =10
+europium_index, europium_data = rebin(europium["data"].values, bin_size)
+untergrund_index, untergrund_data = rebin(untergrund["daten"].values, bin_size)
+
+
 
 # Plot der Europium-Daten
 plt.figure(figsize=(21, 9))
-plt.bar(europium["index"], europium["data"], linewidth=2, width=1.1, label=r"$^{152}\mathrm{Eu}$", color="royalblue")
-plt.bar(untergrund["index"], untergrund["daten"], linewidth=2, width=1.1, label="Untergrund", color="orange")
+plt.bar(europium_index, europium_data, linewidth=2, width=5.1, label=r"$^{152}\mathrm{Eu}$", color="royalblue")
+plt.bar(untergrund_index, untergrund_data, linewidth=2, width=5.1, label="Untergrund", color="orange")
 plt.xlabel(r"Channels")
 plt.ylabel(r"Signals")
 plt.title(r"Europium Data")
 plt.grid(True, linewidth=0.1)
+plt.yscale("log")
 plt.legend()
 plt.tight_layout()
-plt.savefig("./plots/Europium.pdf")
+plt.savefig("../plots/Europium.pdf")
 plt.clf()
 
 # Untergrund entfernen
-europium["data"] = europium["data"] - untergrund["daten"]
+europium_data = europium_data- untergrund_data
 
 
 # Negative Werte in einem Histogramm sind unphysikalisch
-europium["data"] = europium["data"].clip(lower=0)
+europium_data = np.clip(europium_data, a_min=0, a_max=None)
+
+
+plt.figure(figsize=(21, 9))
+plt.bar(europium_index, europium_data, linewidth=2, width=15.1, label=r"$^{152}\mathrm{Eu}$", color="royalblue")
+plt.xlabel(r"Channels")
+plt.ylabel(r"Signals")
+plt.title(r"Europium Data")
+plt.grid(True, linewidth=0.1)
+plt.yscale("log")
+plt.legend()
+plt.tight_layout()
+plt.savefig("../plots/EuropiumOhneUntergrund.pdf")
+plt.clf()
+
+plt.figure(figsize=(21, 9))
+plt.bar(europium_index, europium_data, linewidth=2, width=5.1, label=r"$^{152}\mathrm{Eu}$", color="royalblue")
+plt.xlabel(r"Channels")
+plt.ylabel(r"Signals")
+plt.title(r"Europium Data")
+plt.grid(True, linewidth=0.1)
+plt.ylim(1e-4, 5e-3)
+plt.legend()
+plt.tight_layout()
+plt.savefig("../plots/EuropiumOhneUntergrundLin.pdf")
+plt.clf()
+
 
 # Daten im Bereich von Zeile 1000 bis 8000 betrachten, ohne sie tatsächlich abzuschneiden
-europium_view = europium.iloc[79:8000]
-untergrund_view = untergrund.iloc[79:8000]
+europium_view = europium.iloc[300:8000]
+untergrund_view = untergrund.iloc[300:8000]
 
 # Peaks bestimmen und mit den zugehörigen Parametern in Dataframe speichern
 peaks_array, peaks_params = find_peaks(
-    europium_view["data"], height=5, prominence=15, distance=50
+    europium_view["data"], height=-1e-2, prominence=2e-4, distance=30,width=10
 )
 peaks = pd.DataFrame(peaks_params)
-peaks["peaks"] = peaks_array +79 # Offset durch 900 Zeilen
+peaks["peaks"] = peaks_array+300  # Offset durch 900 Zeilen
+print(peaks)
+
+
 
 #droppe peaks die dem Untergrund zuzuordnen sind
-peaks = peaks.drop([0,1, 2, 3, 4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27])
+peaks = peaks.drop([0])
 
 europium_lit = europium_lit.head(len(peaks))
 # Plot der Kalibrationsmessung
 plt.figure(figsize=(21, 9))
 
 plt.bar(
-    europium["index"],
-    europium["data"],
+    europium_index,
+    europium_data,
     linewidth=2,
-    width=1.1,
+    width=10.1,
     label=r"$^{152}\mathrm{Eu}$",
     color="royalblue",
 )
-plt.plot(peaks["peaks"], peaks["peak_heights"], "x", color="orange", label="Peaks")
+
+peaks_index=np.array([])
+for peak in peaks["peaks"]:
+      for i in range(-int(bin_size/2),int(bin_size/2)):
+          if int(peak)+i in europium_index.astype(int):
+              peaks_index=np.append(peaks_index,np.where(europium_index.astype(int)==int(peak)+i)[0][0])
+peaks_index = peaks_index.astype(int)
+print(europium_data[peaks_index.astype(int)])
+           
+
+plt.plot(peaks["peaks"], europium_data[peaks_index.astype(int)], "x", color="red", markersize=10,markeredgewidth=3,label="Peaks")
 
 plt.xticks(np.linspace(0, 8191, 10))
-plt.yticks(np.linspace(europium["data"].min(), europium["data"].max(), 10))
+plt.yticks(np.linspace(europium_data.min(), europium_data.max(), 10))
 
-plt.ylim(europium["data"].min() - 30)
+plt.ylim(3e-5)
 
 plt.xlabel(r"Kanal")
 plt.ylabel(r"Signal")
@@ -111,7 +180,7 @@ plt.ylabel(r"Signal")
 plt.grid(True, linewidth=0.1)
 plt.legend()
 plt.tight_layout()
-plt.savefig("./plots/Europium-Peaks.pdf")
+plt.savefig("../plots/Europium-Peaks.pdf")
 plt.clf()
 
 #erstelle eine Spalte "Inhalt" im Peaks-DataFrame, falls sie noch nicht existiert
@@ -154,7 +223,8 @@ for peak in peaks["peaks"]:
     photo_peak_mu = m.values["mu"]
     photo_peak_sigma = m.values["sigma"]
 
-    photo_peak_content = integrate_gauss(A_fit.n, mu_fit.n, sigma_fit.n)
+    #photo_peak_content = (integrate_gauss(A_fit.n, mu_fit.n, sigma_fit.n)-y_data.min()*(2*window))*Sum
+    photo_peak_content =(np.sum(y_data)-y_data.min()*(2*window))*Sum
     print(f"Inhalt des {peak}-Photopeaks: {photo_peak_content}")
     # Speichern der Peak-Daten in einer CSV-Datei
     # Erstelle eine Spalte "Inhalt" im Peaks-DataFrame, falls sie noch nicht existiert
@@ -177,16 +247,19 @@ for peak in peaks["peaks"]:
     #plt.title(f"Peak at {peak}")
     plt.grid(True, linewidth=0.1)
     plt.tight_layout()
-    plt.savefig(f"./plots/Europium-Peak-{peak}.pdf")
+    plt.savefig(f"../plots/Europium-Peak-{peak}.pdf")
     plt.clf()
 
 #händische Countzählung für Peak 4303
-peaks.loc[peaks["peaks"] == 4303, "Inhalt"] =  388.6 
-peaks.loc[peaks["peaks"] == 4303, "Inhalt Error"] =  34
+peaks.loc[peaks["peaks"] == 4311, "Inhalt"] =  388.6 
+peaks.loc[peaks["peaks"] == 4311, "Inhalt Error"] =  34
 
+print(peaks)
 # Nach der Kanalnummer aufsteigend sortieren
-peaks.sort_values(by="peaks", inplace=True, ascending=True)
-europium_lit.sort_values(by="Energie", inplace=True, ascending=True)
+peaks.sort_values(by="Inhalt", inplace=True, ascending=True)
+europium_lit.sort_values(by="Intensität", inplace=True, ascending=True)
+
+
 
 # Index beider Dfs zurücksetzen
 peaks = peaks.reset_index(drop=True)
@@ -194,6 +267,9 @@ europium_lit = europium_lit.reset_index(drop=True)
 
 # Nochmal alles in ein Df damit alles leichter gespeichert werden kann
 peaks = pd.concat([europium_lit, peaks], axis=1)
+
+
+
 
 
 def linear(K, alpha, beta):
@@ -208,7 +284,7 @@ def linear_invers(E, alpha, beta):
 
 
 least_squares = LeastSquares(
-    peaks["peaks"], europium_lit["Energie"], europium_lit["Unsicherheit(E)"], linear
+    peaks["peaks"], peaks["Energie"], peaks["Unsicherheit(E)"], linear
 )
 m = Minuit(least_squares, alpha=0, beta=0)
 m.migrad()
@@ -253,5 +329,5 @@ plt.legend(title="\n".join(fit_info), frameon=False)
 plt.xlabel(r"$\mathrm{Kanal}$")
 plt.ylabel(r"$\mathrm{Energie}/\mathrm{keV}$")
 plt.tight_layout()
-plt.savefig("./plots/Europium-Fit.pdf")
+plt.savefig("../plots/Europium-Fit.pdf")
 plt.clf()
