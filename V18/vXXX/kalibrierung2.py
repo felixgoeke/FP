@@ -134,16 +134,16 @@ untergrund_view = untergrund.iloc[300:8000]
 
 # Peaks bestimmen und mit den zugehörigen Parametern in Dataframe speichern
 peaks_array, peaks_params = find_peaks(
-    europium_view["data"], height=-1e-2, prominence=2e-4, distance=30,width=10
+    europium_view["data"], height=-1e-2, prominence=4e-5, distance=20,width=4.5, rel_height=0.35
 )
 peaks = pd.DataFrame(peaks_params)
 peaks["peaks"] = peaks_array+300  # Offset durch 900 Zeilen
-print(peaks)
+
 
 
 
 #droppe peaks die dem Untergrund zuzuordnen sind
-peaks = peaks.drop([0])
+peaks = peaks.drop([0,1])
 
 europium_lit = europium_lit.head(len(peaks))
 # Plot der Kalibrationsmessung
@@ -254,10 +254,14 @@ for peak in peaks["peaks"]:
 peaks.loc[peaks["peaks"] == 4311, "Inhalt"] =  388.6 
 peaks.loc[peaks["peaks"] == 4311, "Inhalt Error"] =  34
 
-print(peaks)
+
 # Nach der Kanalnummer aufsteigend sortieren
-peaks.sort_values(by="Inhalt", inplace=True, ascending=True)
-europium_lit.sort_values(by="Intensität", inplace=True, ascending=True)
+peaks.sort_values(by="peaks", inplace=True, ascending=True)
+europium_lit.sort_values(by="Energie", inplace=True, ascending=True)
+
+print(europium_lit)
+print(peaks)
+
 
 
 
